@@ -1,0 +1,10 @@
+<header>
+  <h1>Profile</h1>
+  <div class="menu-container">
+    <button (click)="toggleMenu()" class="menu-icon">☰</button>
+    <div *ngIf="isMenuOpen" class="menu">
+      <p>{{ user()?.name }} {{ user()?.surname }}</p>
+      <button (click)="logout()">Logout</button>
+    </div>
+  </div>
+</header>

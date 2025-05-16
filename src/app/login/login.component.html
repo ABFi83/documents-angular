@@ -1,0 +1,12 @@
+<div class="login-container" style="font-family: 'Arial', sans-serif;">
+  <h2 style="font-family: 'Georgia', serif;">Document</h2>
+  <form (ngSubmit)="login()">
+    <label for="username" style="font-family: 'Verdana', sans-serif;">Username:</label>
+    <input type="text" id="username" [(ngModel)]="username" name="username" required style="font-family: 'Courier New', monospace;" />
+
+    <label for="password" style="font-family: 'Verdana', sans-serif;">Password:</label>
+    <input type="password" id="password" [(ngModel)]="password" name="password" required style="font-family: 'Courier New', monospace;" />
+
+    <button type="submit" style="font-family: 'Tahoma', sans-serif;">Login</button>
+  </form>
+</div>

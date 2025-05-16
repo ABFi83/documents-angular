@@ -1,0 +1,9 @@
+<main>
+  <app-header></app-header>
+  <div *ngIf="showDocumentUpload; else userComponent">
+    <app-document-upload></app-document-upload>
+  </div>
+  <ng-template #userComponent>
+    <app-user></app-user>
+  </ng-template>
+</main>

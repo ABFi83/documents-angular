@@ -1,0 +1,24 @@
+<main>
+  <div class="upload-container" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
+    <input type="file" id="fileInput" (change)="onFileSelected($event)" hidden />
+    <label for="fileInput" class="upload-label">{{ (!selectedFileName || !selectedFileName.endsWith('.pdf')) ? 'Carica il tuo CV' : selectedFileName }}</label>
+  </div>
+  <div *ngIf="selectedFileName" class="file-info">
+    <button (click)="clearFile()" class="delete-icon">🗑️</button>
+  </div>
+  <div *ngIf="selectedFileName?.endsWith('.pdf') && !isUploading" class="proceed-container">
+    <button class="proceed-button" (click)="onProceed()">Procedi</button>
+  </div>
+  <div *ngIf="isUploading" class="progress-container">
+    <div class="progress-bar"></div>
+  </div>
+  <div *ngIf="uploadSuccess" class="success-message">
+    <span>Caricamento completato con successo!</span>
+  </div>
+  <div *ngIf="selectedFileName && !selectedFileName.endsWith('.pdf')" class="error-message">
+    <span>Il formato deve essere PDF</span>
+  </div>
+  <div *ngIf="errorMessage" class="error-message">
+    <span>{{ errorMessage }}</span>
+  </div>
+</main>

@@ -1,0 +1,105 @@
+.upload-container {
+  position: relative;
+  width: 50%;
+  margin: 0 auto;
+  padding: 20px;
+  border: 2px dashed lightblue;
+  border-radius: 10px;
+  background-color: #f0f8ff; /* AliceBlue */
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.upload-container:hover {
+  background-color: #e0f7fa; /* Light Cyan */
+}
+
+.upload-container h2 {
+  margin-bottom: 20px;
+}
+
+.upload-container input {
+  padding: 10px;
+  font-size: 16px;
+}
+
+.upload-label {
+  font-weight: bold;
+  font-size: 1.2em;
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.delete-icon {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5em;
+  color: red;
+}
+
+.proceed-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.proceed-button {
+  background-color: lightblue;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.proceed-button:hover {
+  background-color: deepskyblue;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9em;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.success-message {
+  color: green;
+  font-size: 1em;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.progress-container {
+  width: 50%;
+  margin: 20px auto 0 auto; /* Aggiungo spazio sopra la barra */
+  background-color: #f3f3f3;
+  border-radius: 5px;
+  height: 20px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 100%;
+  background-color: lightblue;
+  animation: progress-animation 10s linear infinite;
+}
+
+@keyframes progress-animation {
+  0% {
+    width: 0%;
+  }
+  50% {
+    width: 50%;
+  }
+  100% {
+    width: 100%;
+  }
+}
