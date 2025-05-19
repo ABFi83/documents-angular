@@ -9,5 +9,9 @@
 
     <button type="submit" style="font-family: 'Tahoma', sans-serif;">Login</button>
   </form>
+
   <div *ngIf="errorMessage" class="error-message" style="color: red; text-align: center; margin-top: 10px;">{{ errorMessage }}</div>
+  <div style="text-align: center; margin-top: 20px;">
+    <label (click)="goToRegistration()" style="color: #007bff; cursor: pointer; text-decoration: underline;">Registrati</label>
+  </div>
 </div>
