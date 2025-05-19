@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService } from '../user/user.service';
 import { signal } from '@angular/core';
-import { User } from '../../model/user.model';
+import { User } from '../../model/model';
 import { CommonModule } from '@angular/common';
 import { LoginService } from '../login/login.service';
 import { Router } from '@angular/router';

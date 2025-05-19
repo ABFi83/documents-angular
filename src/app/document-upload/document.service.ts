@@ -22,4 +22,6 @@ export class DocumentService {
     console.log('Uploading document with title, metadata, and file:', title, metadata, file);
     return this.http.post(this.documentUrl, formData);
   }
+
+
 }

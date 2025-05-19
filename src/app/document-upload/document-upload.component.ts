@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { DocumentService } from './document.service';
 import { tap } from 'rxjs/operators';
 import { WebSocketSubject } from 'rxjs/webSocket';
+import { ProcesService } from './process.service';
+import { Process, ProcessStatus } from '../../model/model';
 
 @Component({
   selector: 'app-document-upload',
@@ -15,9 +17,8 @@ export class DocumentUploadComponent {
   isUploading: boolean = false;
   uploadSuccess: boolean = false;
   errorMessage: string | null = null;
-  private uploadStatusSocket: WebSocketSubject<any> | null = null;
 
-    constructor(private documentService: DocumentService) {
+    constructor(private documentService: DocumentService, private procesService: ProcesService) {
 
     }
 
@@ -70,7 +71,7 @@ export class DocumentUploadComponent {
           tap({
             next: (response) => {
               console.log('Document uploaded successfully:', response);
-              //this.initializeWebSocket();
+              this.initializePolling(response.id); // Assuming the response contains the ID of the uploaded document
             },
             error: (error) => {
               console.error('Error uploading document:', error);
@@ -88,31 +89,29 @@ export class DocumentUploadComponent {
     }
   }
 
-  private initializeWebSocket() {
-    this.uploadStatusSocket = new WebSocketSubject('ws://127.0.0.1:8080');
+  private initializePolling(id: number) {
+    const pollingInterval = 5000; // 5 seconds
+    let pollingHandle: any;
 
-    this.uploadStatusSocket.subscribe({
-      next: (message) => {
-        console.log('WebSocket message received:', message);
-        if (message.status === 'completed') {
-          this.isUploading = false;
-          this.uploadSuccess = true;
-          console.log('Upload completed via WebSocket');
-         //this.uploadStatusSocket?.complete();
-        }
-      },
-      error: (err) => {
-        console.error('WebSocket error occurred:', err);
-        console.error('WebSocket URL:', 'wss://127.0.0.1:8080/upload-status');
-        this.isUploading = false;
-      },
-      complete: () => {
-        console.log('WebSocket connection closed');
-      }
-    });
+    const poll = () => {
+        this.procesService.getProcess(id).subscribe({
+            next: (process: Process) => {
+                console.log('Polling status received:', process.status);
+                if (process.status === ProcessStatus.COMPLETED) {
+                    this.isUploading = false;
+                    this.uploadSuccess = true;
+                    console.log('Upload completed via polling');
+                    clearInterval(pollingHandle); // Stop polling
+                }
+            },
+            error: (err: any) => {
+                console.error('Polling error occurred:', err);
+                clearInterval(pollingHandle); // Stop polling on error
+            }
+        });
+    };
 
-    // Log WebSocket readyState after creation
-    const webSocket = this.uploadStatusSocket as any;
-    console.log('WebSocket initial readyState:', webSocket?.socket?.readyState);
+    // Start polling
+    pollingHandle = setInterval(poll, pollingInterval);
   }
 }

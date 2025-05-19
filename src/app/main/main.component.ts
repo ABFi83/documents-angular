@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { UserComponent } from '../user/user.component';
 import { UserService } from '../user/user.service';
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
-import { User } from '../../model/user.model';
+import { User } from '../../model/model';
 
 @Component({
   selector: 'app-main',

@@ -13,3 +13,17 @@ export interface User {
   surname: string;
   documents: Document[];
 }
+export interface Process {
+  id: number;
+  userId: number;
+  status: ProcessStatus;
+  startEnd: Date;
+  endEnd: Date | null;
+}
+
+export enum ProcessStatus {
+  PENDING = 'PENDING',
+  IN_PROGRESS = 'IN_PROGRESS',
+  COMPLETED = 'COMPLETED'
+}
+
