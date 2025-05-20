@@ -1,0 +1,72 @@
+.experience-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px 0 18px;
+}
+
+ul {
+  list-style: none;
+  padding: 0 0 10px 0;
+  margin: 0;
+  border: 2px solid #87ceeb;
+  border-radius: 16px;
+  background: #f8fbff;
+  position: relative;
+}
+
+li {
+  padding: 10px 18px;
+  border-bottom: 1px solid #e3f1fb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+li:last-child {
+  border-bottom: none;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #2196f3;
+  font-size: 1.5em;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.icon-btn:hover {
+  color: #1565c0;
+}
+
+.add-btn {
+  position: static;
+  margin-left: 12px;
+  background: none;
+  box-shadow: none;
+  border-radius: 50%;
+  font-size: 2em;
+  padding: 0;
+  color: #2196f3;
+}
+
+.add-btn:hover {
+  color: #1565c0;
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: normal;
+  font-size: inherit;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}

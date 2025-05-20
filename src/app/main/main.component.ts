@@ -7,6 +7,7 @@ import { UserComponent } from '../user/user.component';
 import { UserService } from '../user/user.service';
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { User } from '../../model/model';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-main',
@@ -19,7 +20,7 @@ export class MainComponent {
   showDocumentUpload: boolean = true; // Aggiunta della proprietà per controllare quale componente mostrare
   user: User | null = null;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private http: HttpClient) {
     this.initializeUser();
   }
 
@@ -30,4 +31,6 @@ export class MainComponent {
       this.showDocumentUpload = false;
     }
   }
+
+
 }

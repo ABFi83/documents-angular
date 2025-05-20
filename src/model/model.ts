@@ -36,13 +36,15 @@ export interface Process {
   id: number;
   userId: number;
   status: ProcessStatus;
-  startEnd: Date;
+  error_message: string | null;
+  start_end: Date;
   endEnd: Date | null;
 }
 
 export enum ProcessStatus {
   PENDING = 'PENDING',
   IN_PROGRESS = 'IN_PROGRESS',
-  COMPLETED = 'COMPLETED'
+  COMPLETED = 'COMPLETED',
+  ERROR = 'ERROR'
 }
 

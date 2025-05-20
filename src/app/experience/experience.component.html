@@ -1,0 +1,15 @@
+<div class="experience-header">
+  <h1>Experience</h1>
+  <button (click)="addExperience()" class="icon-btn add-btn" title="Aggiungi esperienza">
+    <i class="material-icons">add_circle_outline</i>
+  </button>
+</div>
+<ul *ngIf="experiences">
+  <li *ngFor="let exp of experiences">
+    <span>{{ exp.companyName }} - {{ exp.role }} ({{ exp.startDate | date:'yyyy' }} - {{ exp.endDate ? (exp.endDate | date:'yyyy') : 'Presente' }})</span>
+    <button (click)="removeExperience(exp)" class="icon-btn" title="Rimuovi esperienza">
+      <i class="material-icons">remove_circle_outline</i>
+    </button>
+  </li>
+</ul>
+

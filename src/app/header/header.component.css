@@ -10,12 +10,76 @@ header {
 }
 
 .menu {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 18px 18px 12px 18px;
   position: absolute;
-  top: 8%;
-  right: 0.5%;
-  background-color: rgb(196, 194, 194);
-  color: white;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  right: 0;
+  top: 40px;
+  min-width: 180px;
+  z-index: 100;
+}
+
+.reset-btn {
+  background: none;
+  color: #e53935;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.reset-btn:hover {
+  background: #ffeaea;
+  color: #b71c1c;
+}
+
+.welcome, .welcome-user {
+  text-align: center;
+  width: 100%;
+  margin: 0 0 6px 0;
+}
+
+.welcome-user {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.menu-icon {
+  background: none;
+  border: none;
+  color: #1976d2;
+  font-size: 2.2em;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 50%;
+  transition: background 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-icon:hover {
+  background: #e3f2fd;
+  color: #0d47a1;
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: normal;
+  font-size: inherit;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
 }

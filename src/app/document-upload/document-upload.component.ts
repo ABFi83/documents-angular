@@ -5,7 +5,7 @@ import { tap } from 'rxjs/operators';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { ProcesService } from './process.service';
 import { Process, ProcessStatus } from '../../model/model';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-document-upload',
   templateUrl: './document-upload.component.html',
@@ -18,7 +18,7 @@ export class DocumentUploadComponent {
   uploadSuccess: boolean = false;
   errorMessage: string | null = null;
 
-    constructor(private documentService: DocumentService, private procesService: ProcesService) {
+    constructor(private router: Router, private documentService: DocumentService, private procesService: ProcesService) {
 
     }
 
@@ -102,7 +102,15 @@ export class DocumentUploadComponent {
                     this.uploadSuccess = true;
                     console.log('Upload completed via polling');
                     clearInterval(pollingHandle); // Stop polling
+                    window.location.reload(); // Ricarica la pagina
                 }
+                if (process.status === ProcessStatus.ERROR) {
+                  this.isUploading = false;
+                  this.uploadSuccess = false;
+                  console.log('Upload error via polling');
+                  this.errorMessage = process.error_message || 'Errore durante il caricamento del documento.';
+                  clearInterval(pollingHandle); // Stop polling
+              }
             },
             error: (err: any) => {
                 console.error('Polling error occurred:', err);

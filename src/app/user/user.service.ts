@@ -32,4 +32,8 @@ export class UserService {
   logout() {
     this.userSignal.set(null);
   }
+
+  reset(): Observable<any> {
+    return this.http.post(this.userUrl+'/reset', {});
+  }
 }
