@@ -17,6 +17,7 @@ import { User } from '../../model/model';
 })
 export class MainComponent {
   showDocumentUpload: boolean = true; // Aggiunta della proprietà per controllare quale componente mostrare
+  user: User | null = null;
 
   constructor(private userService: UserService) {
     this.initializeUser();
@@ -24,11 +25,9 @@ export class MainComponent {
 
   private async initializeUser(): Promise<void> {
     let user: User = await firstValueFrom(this.userService.getUser());
+    this.user = user;
     if(user.documents && user.documents.length > 0) {
-      this.showDocumentUpload = false; // Mostra il componente DocumentUploadComponent
-    console.log("USER SERVICE");
-    console.log(user);
+      this.showDocumentUpload = false;
+    }
   }
-}
-
 }

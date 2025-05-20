@@ -1,0 +1,15 @@
+<div class="skills-header">
+  <h1>Skills</h1>
+  <button (click)="addSkill()" class="icon-btn add-btn" title="Aggiungi skill">
+    <i class="material-icons">add_circle_outline</i>
+  </button>
+</div>
+<ul *ngIf="skills">
+  <li *ngFor="let skill of skills">
+    <span>{{ skill.name }} {{ skill.level }}</span>
+    <button (click)="removeSkill(skill)" class="icon-btn" title="Rimuovi skill">
+      <i class="material-icons">remove_circle_outline</i>
+    </button>
+  </li>
+</ul>
+
