@@ -1,8 +1,7 @@
 <div class="popup-overlay">
   <div class="popup">
-    <h3>Aggiungi Skill</h3>
-    <label>Nome:</label>
-    <input [(ngModel)]="skillName" placeholder="Nome skill" list="skills-list" (input)="onSkillInput()" (blur)="onSkillBlur()" (change)="onSkillSelect()" />
+    <h3>SKILLS</h3>
+    <input [(ngModel)]="skillName" placeholder="Skill" list="skills-list" (input)="onSkillInput()" (blur)="onSkillBlur()" (change)="onSkillSelect()" />
     <datalist id="skills-list">
       <option *ngFor="let option of filteredSkills" [value]="option.name" (click)="onSkillOptionClick(option)"></option>
     </datalist>

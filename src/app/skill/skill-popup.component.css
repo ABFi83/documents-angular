@@ -74,48 +74,58 @@
 
 .added-skills {
   min-height: 48px;
+  min-width: 320px;
   border: 2px solid #87ceeb;
   border-radius: 12px;
-  background: #f8fbff;
-  padding: 8px 10px;
+  background: linear-gradient(135deg, #f8fbff, #e3f2fd);
+  padding: 12px 16px;
   margin-bottom: 10px;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 12px;
   align-items: center;
-  min-width: 450px;
   max-width: 550px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .added-skill {
-  background: #e3f2fd;
-  border-radius: 8px;
-  padding: 4px 10px;
+  background: #ffffff;
+  border: 1px solid #b3e5fc;
+  border-radius: 16px;
+  padding: 6px 12px;
   display: flex;
   align-items: center;
   font-size: 1em;
-  flex: 1 1 calc(25% - 8px); /* 4 per riga con gap */
+  flex: 1 1 calc(25% - 12px);
   box-sizing: border-box;
-  max-width: 200px; /* Imposta una larghezza massima */
-  overflow: hidden; /* Nasconde il contenuto in eccesso */
-  text-overflow: ellipsis; /* Aggiunge i puntini di sospensione per il testo lungo */
-  white-space: nowrap; /* Impedisce il wrapping del testo */
-  position: relative; /* Necessario per posizionare il pulsante all'interno */
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  min-width: 150px; /* Imposta una larghezza minima */
+  min-height: 50px; /* Imposta un'altezza minima */
+  justify-content: center; /* Centra il contenuto orizzontalmente */
+}
+
+.added-skill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .remove-skill-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
   background: none;
   border: none;
   color: #e53935;
-  font-size: 1.1em;
-  margin-left: 6px;
+  font-size: 1.2em;
   cursor: pointer;
   border-radius: 50%;
   transition: background 0.2s;
-  position: absolute;
-  right: 4px; /* Posiziona il pulsante a destra */
-  top: 50%; /* Centra verticalmente */
-  transform: translateY(-50%); /* Corregge l'allineamento verticale */
 }
 
 .remove-skill-btn:hover {
