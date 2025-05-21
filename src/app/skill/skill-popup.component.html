@@ -1,0 +1,20 @@
+<div class="popup-overlay">
+  <div class="popup">
+    <h3>Aggiungi Skill</h3>
+    <label>Nome:</label>
+    <input [(ngModel)]="skillName" placeholder="Nome skill" list="skills-list" (input)="onSkillInput()" (blur)="onSkillBlur()" (change)="onSkillSelect()" />
+    <datalist id="skills-list">
+      <option *ngFor="let option of filteredSkills" [value]="option.name" (click)="onSkillOptionClick(option)"></option>
+    </datalist>
+    <div class="added-skills">
+      <span *ngFor="let s of addedSkills" class="added-skill">
+        {{ s.name }}
+        <button type="button" (click)="removeAddedSkill(s)" class="remove-skill-btn">&times;</button>
+      </span>
+    </div>
+    <div class="popup-actions">
+      <button (click)="onCancel()">Annulla</button>
+      <button (click)="onConfirm()" [disabled]="addedSkills.length === 0">Conferma</button>
+    </div>
+  </div>
+</div>

@@ -6,10 +6,18 @@
 </div>
 <ul *ngIf="skills">
   <li *ngFor="let skill of skills">
-    <span>{{ skill.name }} {{ skill.level }}</span>
+    <span>
+      {{ skill.name }}
+    </span>
     <button (click)="removeSkill(skill)" class="icon-btn" title="Rimuovi skill">
       <i class="material-icons">remove_circle_outline</i>
     </button>
   </li>
 </ul>
+<app-skill-popup *ngIf="showAddSkillPopup"
+  [userSkills]="userSkills"
+  (confirm) ="onSkillPopupConfirm($event)"
+  (cancel)="onSkillPopupCancel()">
+</app-skill-popup>
+
 

@@ -20,7 +20,6 @@ export interface User {
 export interface Skill {
   id: number;
   name: string;
-  level: string;
 }
 
 export interface Experience {

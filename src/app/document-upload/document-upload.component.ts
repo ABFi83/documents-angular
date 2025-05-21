@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DocumentService } from './document.service';
 import { tap } from 'rxjs/operators';
-import { WebSocketSubject } from 'rxjs/webSocket';
 import { ProcesService } from './process.service';
 import { Process, ProcessStatus } from '../model/model';
 import { Router } from '@angular/router';
