@@ -5,7 +5,7 @@ import { environment } from '../environment';
 import { log } from 'console';
 import { switchMap } from 'rxjs/operators';
 import { LoginService } from '../login/login.service';
-import { User } from '../../model/model';
+import { User } from '../model/model';
 
 @Injectable({
   providedIn: 'root'

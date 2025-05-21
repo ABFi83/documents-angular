@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { UserComponent } from '../user/user.component';
 import { UserService } from '../user/user.service';
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
-import { User } from '../../model/model';
+import { User } from '../model/model';
 import { HttpClient } from '@angular/common/http';
 
 @Component({

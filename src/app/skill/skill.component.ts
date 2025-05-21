@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { Skill } from '../../model/model';
+import { Skill } from '../model/model';
 
 @Component({
   selector: 'app-skill',

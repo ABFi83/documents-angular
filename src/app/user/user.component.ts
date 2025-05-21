@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { User } from '../../model/model';
+import { User } from '../model/model';
 import { CommonModule } from '@angular/common';
 import { SkillComponent } from "../skill/skill.component";
 import { ExperienceComponent } from "../experience/experience.component";

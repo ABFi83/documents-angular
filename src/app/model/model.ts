@@ -25,10 +25,10 @@ export interface Skill {
 
 export interface Experience {
   id: number;
-  companyName: string;
+  company_name: string;
   role: string;
-  startDate: Date | null;
-  endDate: Date | null;
+  start_date: string | null;
+  end_date: string | null;
   description?: string | null;
 }
 

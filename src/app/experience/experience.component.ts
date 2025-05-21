@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { Experience } from '../../model/model';
+import { Experience } from '../model/model';
 
 @Component({
   selector: 'app-experience',
@@ -13,6 +13,10 @@ import { Experience } from '../../model/model';
 export class ExperienceComponent {
   @Input() experiences: Experience[] = [];
 
+  constructor(private datePipe: DatePipe) {
+
+    console.log('Experiences:', this.experiences);
+  }
   addExperience() {
     // Logica per aggiungere una nuova esperienza (da implementare)
     alert('Aggiungi esperienza (da implementare)');

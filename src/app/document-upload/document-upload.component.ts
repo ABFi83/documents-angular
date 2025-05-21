@@ -4,7 +4,7 @@ import { DocumentService } from './document.service';
 import { tap } from 'rxjs/operators';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { ProcesService } from './process.service';
-import { Process, ProcessStatus } from '../../model/model';
+import { Process, ProcessStatus } from '../model/model';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-document-upload',
