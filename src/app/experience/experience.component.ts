@@ -1,9 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Experience } from '../model/model';
 import { ExperiencePopupComponent } from './experience-popup.component';
 import { ExperienceService } from './experience.service';
-import e from 'express';
+
 
 @Component({
   selector: 'app-experience',
@@ -15,27 +15,28 @@ import e from 'express';
 })
 export class ExperienceComponent {
   @Input() experiences: Experience[] = [];
+
   userExperiences: Experience | undefined;
   showAddExperiencePopup = false;
   isViewing=false;
 
-constructor(private experienceService:ExperienceService) { }
+  constructor(private experienceService:ExperienceService) { }
 
-ngOnInit(): void {
-  if (this.experiences && Array.isArray(this.experiences)) {
-    this.experiences.sort((a: Experience, b: Experience) => {
-      if (a.is_current && !b.is_current) {
-        return -1;
-      } else if (!a.is_current && b.is_current) {
-        return 1;
-      } else {
-        const dateA = new Date(a.end_date || '9999-12-31');
-        const dateB = new Date(b.end_date || '9999-12-31');
-        return dateB.getTime() - dateA.getTime();
-      }
-    });
+  ngOnInit(): void {
+    if (this.experiences && Array.isArray(this.experiences)) {
+      this.experiences.sort((a: Experience, b: Experience) => {
+        if (a.is_current && !b.is_current) {
+          return -1;
+        } else if (!a.is_current && b.is_current) {
+          return 1;
+        } else {
+          const dateA = new Date(a.end_date || '9999-12-31');
+          const dateB = new Date(b.end_date || '9999-12-31');
+          return dateB.getTime() - dateA.getTime();
+        }
+      });
+    }
   }
-}
 
   addExperience() {
     this.showAddExperiencePopup = true;
@@ -48,7 +49,13 @@ ngOnInit(): void {
     this.showAddExperiencePopup = false;
     this.experienceService.manageExperience(this.userExperiences).subscribe({
       next: (response) => {
-        window.location.reload();
+        console.log('OK', response);
+        this.experienceService.getExperiences().subscribe({
+          next: (response) => {
+            this.experiences = response;
+            console.log('Experiences:', this.experiences);
+          }
+        });
       },
       error: (error) => {
         console.error('Error saving experience:', error);

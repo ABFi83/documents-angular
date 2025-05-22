@@ -24,12 +24,25 @@ export class MainComponent {
     this.initializeUser();
   }
 
-  private async initializeUser(): Promise<void> {
+  uploadFileCompleted() {
+    this.showDocumentUpload = false;
+    this.getUser();
+  }
+
+  resetEvent() {
+    this.showDocumentUpload = true;
+  }
+
+  async initializeUser(): Promise<void> {
     let user: User = await firstValueFrom(this.userService.getUser());
     this.user = user;
     if(user.documents && user.documents.length > 0) {
       this.showDocumentUpload = false;
     }
+  }
+
+  async getUser() {
+    this.user= await firstValueFrom(this.userService.getUser());
   }
 
 

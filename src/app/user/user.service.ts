@@ -2,9 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../environment';
-import { log } from 'console';
 import { switchMap } from 'rxjs/operators';
-import { LoginService } from '../login/login.service';
 import { User } from '../model/model';
 
 @Injectable({

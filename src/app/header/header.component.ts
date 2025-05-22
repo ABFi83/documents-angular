@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, EventEmitter, HostListener, Output } from '@angular/core';
 import { UserService } from '../user/user.service';
 import { signal } from '@angular/core';
 import { User } from '../model/model';
@@ -17,6 +17,8 @@ export class HeaderComponent {
   [x: string]: any;
   userSignal;
   isMenuOpen = false;
+
+  @Output() resetEvent= new EventEmitter<void>();
 
   constructor(private router: Router, private userService: UserService, private loginService: LoginService, private http: HttpClient) {
     this.userSignal = this.userService.getUserSignal();
@@ -39,7 +41,8 @@ export class HeaderComponent {
   reset() {
     this.userService.reset().subscribe({
       next: () => {
-        window.location.reload();
+        this.isMenuOpen = false;
+        this.resetEvent.emit();
       },
       error: (err) => {
         alert('Errore durante il reset');

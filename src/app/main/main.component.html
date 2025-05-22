@@ -1,7 +1,7 @@
 <main>
-  <app-header></app-header>
+  <app-header (resetEvent)="resetEvent()"></app-header>
   <div *ngIf="showDocumentUpload; else userComponent">
-    <app-document-upload></app-document-upload>
+    <app-document-upload (uploadCompleted)="uploadFileCompleted()"></app-document-upload>
   </div>
   <ng-template #userComponent>
     <app-user [user]="user"></app-user>

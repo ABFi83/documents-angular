@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { User } from '../model/model';
+import { User, Experience } from '../model/model';
 import { CommonModule } from '@angular/common';
 import { SkillComponent } from "../skill/skill.component";
 import { ExperienceComponent } from "../experience/experience.component";
+import e from 'express';
 
 @Component({
   selector: 'app-user',
@@ -15,4 +16,8 @@ import { ExperienceComponent } from "../experience/experience.component";
 })
 export class UserComponent {
   @Input() user: User | null = null;
+
+
+
+
 }

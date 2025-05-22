@@ -15,9 +15,3 @@ export const routes: Routes = [
     component: MainComponent},
   { path: '**', redirectTo: 'login' },
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule {}

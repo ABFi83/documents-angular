@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DocumentService } from './document.service';
 import { tap } from 'rxjs/operators';
@@ -17,9 +17,12 @@ export class DocumentUploadComponent {
   uploadSuccess: boolean = false;
   errorMessage: string | null = null;
 
-    constructor(private router: Router, private documentService: DocumentService, private procesService: ProcesService) {
+  @Output() uploadCompleted= new EventEmitter<void>();
 
-    }
+
+  constructor(private router: Router, private documentService: DocumentService, private procesService: ProcesService) {
+
+  }
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
@@ -99,9 +102,8 @@ export class DocumentUploadComponent {
                 if (process.status === ProcessStatus.COMPLETED) {
                     this.isUploading = false;
                     this.uploadSuccess = true;
-                    console.log('Upload completed via polling');
                     clearInterval(pollingHandle);
-                    window.location.reload();
+                    this.uploadCompleted.emit();
                 }
                 if (process.status === ProcessStatus.ERROR) {
                   this.isUploading = false;
