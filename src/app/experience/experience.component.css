@@ -27,13 +27,22 @@ li:last-child {
   border-bottom: none;
 }
 
+li .icon-btn {
+  margin-left: 4px; /* Ridotto lo spazio tra le icone */
+  margin-right: 0;
+}
+
+li .icon-btn:last-child {
+  margin-left: 4px;
+}
+
 .icon-btn {
   background: none;
   border: none;
   cursor: pointer;
   color: #2196f3;
   font-size: 1.5em;
-  margin-left: 10px;
+  margin-left: 0;  /* Rimosso il margine sinistro di default */
   display: flex;
   align-items: center;
 }
@@ -61,12 +70,20 @@ li:last-child {
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: normal;
-  font-size: inherit;
+  font-size: 1.2em;
   line-height: 1;
   letter-spacing: normal;
   text-transform: none;
   display: inline-block;
   direction: ltr;
+  font-feature-settings: 'liga'; /* Aggiunta la proprietà standard per compatibilità */
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
+}
+
+.experiences-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px 0 18px;
 }

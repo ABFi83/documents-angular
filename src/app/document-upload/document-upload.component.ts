@@ -100,20 +100,20 @@ export class DocumentUploadComponent {
                     this.isUploading = false;
                     this.uploadSuccess = true;
                     console.log('Upload completed via polling');
-                    clearInterval(pollingHandle); // Stop polling
-                    window.location.reload(); // Ricarica la pagina
+                    clearInterval(pollingHandle);
+                    window.location.reload();
                 }
                 if (process.status === ProcessStatus.ERROR) {
                   this.isUploading = false;
                   this.uploadSuccess = false;
                   console.log('Upload error via polling');
                   this.errorMessage = process.error_message || 'Errore durante il caricamento del documento.';
-                  clearInterval(pollingHandle); // Stop polling
+                  clearInterval(pollingHandle);
               }
             },
             error: (err: any) => {
                 console.error('Polling error occurred:', err);
-                clearInterval(pollingHandle); // Stop polling on error
+                clearInterval(pollingHandle);
             }
         });
     };

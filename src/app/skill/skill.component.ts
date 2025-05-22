@@ -17,14 +17,13 @@ export class SkillComponent {
 
   showAddSkillPopup = false;
 
-
   constructor(private skillService:SkillService) {
   }
   removeSkill(skill: Skill) {
-    // Logica per rimuovere la skill (da implementare secondo le necessità)
-    this.skills = this.skills.filter(s => s.id !== skill.id);
+
     this.skillService.deleteSkill(skill).subscribe({
       next: (response) => {
+        this.skills = this.skills.filter(s => s.id !== skill.id);
         console.log('Skills saved successfully:', response);
       },
       error: (error) => {
@@ -34,7 +33,6 @@ export class SkillComponent {
   }
 
   addSkill() {
-    // Aggiorna userSkills con una copia delle skills attuali
     this.userSkills = this.skills ? [...this.skills] : [];
     console.log('userSkills on open:', this.userSkills);
     this.showAddSkillPopup = true;

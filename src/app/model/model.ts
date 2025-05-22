@@ -26,9 +26,10 @@ export interface Experience {
   id: number;
   company_name: string;
   role: string;
-  start_date: string | null;
-  end_date: string | null;
-  description?: string | null;
+  description: string;
+  start_date: string;
+  end_date: string;
+  is_current: boolean;
 }
 
 export interface Process {

@@ -1,0 +1,37 @@
+<div class="popup-overlay">
+  <div class="popup">
+    <h3>Experiences</h3>
+    <form #experienceForm="ngForm">
+      <label>Company:</label>
+      <input [(ngModel)]="company_name" name="company_name" placeholder="Company" required #companyNameInput="ngModel" [class.input-error]="showErrors && !company_name" [disabled]="isViewing" />
+
+
+      <label>Role:</label>
+      <input [(ngModel)]="role" name="role" placeholder="Role" required #roleInput="ngModel" [class.input-error]="showErrors && !role" [disabled]="isViewing" />
+
+
+      <label>Descrizione:</label>
+      <textarea [(ngModel)]="experienceDescription" name="experienceDescription" placeholder="Descrizione esperienza" [disabled]="isViewing"></textarea>
+
+      <div class="date-inputs">
+        <div class="date-input-group">
+          <label>Data inizio:</label>
+          <input type="date" [(ngModel)]="experienceStartDate" name="experienceStartDate" required #startDateInput="ngModel" [class.input-error]="showErrors && !experienceStartDate" [disabled]="isViewing" />
+        </div>
+        <div class="date-input-group">
+          <label>Data fine:</label>
+          <input type="date" [(ngModel)]="experienceEndDate" name="experienceEndDate" [disabled]="isCurrentPosition || isViewing" [required]="!isCurrentPosition" #endDateInput="ngModel" [class.input-error]="showErrors && !isCurrentPosition && !experienceEndDate" />
+          <div class="current-position-row-centered">
+            <input type="checkbox" [(ngModel)]="isCurrentPosition" style="width: 10%" name="isCurrentPosition" id="isCurrentPosition" [disabled]="isViewing" />
+            <label for="isCurrentPosition">Posizione attuale</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="popup-actions">
+        <button type="button" (click)="onCancel()">Annulla</button>
+        <button type="button" [disabled]="isViewing" (click)="onConfirm()">Conferma</button>
+      </div>
+    </form>
+  </div>
+</div>

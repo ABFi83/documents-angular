@@ -1,18 +1,26 @@
-<div class="experience-header">
+<div class="experiences-header">
   <h1>Experiences</h1>
   <button (click)="addExperience()" class="icon-btn add-btn" title="Aggiungi esperienza">
     <i class="material-icons">add_circle_outline</i>
   </button>
 </div>
-<ul *ngIf="experiences">
-  <li *ngFor="let exp of experiences">
-    <span>
-      {{ exp.company_name }} - {{ exp.role }}
-      ({{ exp.start_date }} - {{ exp.end_date && exp.end_date.toLowerCase() !== 'present' ? exp.end_date : 'Presente' }})
-    </span>
-    <button (click)="removeExperience(exp)" class="icon-btn" title="Rimuovi esperienza">
-      <i class="material-icons">remove_circle_outline</i>
-    </button>
+<ul >
+  <li *ngFor="let experience of experiences" (click)="viewExperience(experience)">
+    <span>{{ experience.company_name }} - {{ experience.role }}</span>
+    <div>
+      <button (click)="editExperience(experience); $event.stopPropagation()" class="icon-btn" title="Modifica esperienza">
+        <i class="material-icons">edit</i>
+      </button>
+      <button (click)="deleteExperience(experience); $event.stopPropagation()" class="icon-btn" title="Elimina esperienza">
+        <i class="material-icons">delete</i>
+      </button>
+    </div>
   </li>
 </ul>
+<app-experience-popup *ngIf="showAddExperiencePopup"
+  [userExperiences]="userExperiences"
+  [isViewing]="isViewing"
+  (confirm)="onExperiencePopupConfirm($event)"
+  (cancel)="onExperiencePopupCancel()">
+</app-experience-popup>
 
