@@ -18,7 +18,25 @@ export class ExperienceComponent {
   userExperiences: Experience | undefined;
   showAddExperiencePopup = false;
   isViewing=false;
+
 constructor(private experienceService:ExperienceService) { }
+
+ngOnInit(): void {
+  if (this.experiences && Array.isArray(this.experiences)) {
+    this.experiences.sort((a: Experience, b: Experience) => {
+      if (a.is_current && !b.is_current) {
+        return -1;
+      } else if (!a.is_current && b.is_current) {
+        return 1;
+      } else {
+        const dateA = new Date(a.end_date || '9999-12-31');
+        const dateB = new Date(b.end_date || '9999-12-31');
+        return dateB.getTime() - dateA.getTime();
+      }
+    });
+  }
+}
+
   addExperience() {
     this.showAddExperiencePopup = true;
     this.userExperiences=undefined
