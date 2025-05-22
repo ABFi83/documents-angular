@@ -1,27 +1,24 @@
-import { Injectable } from '@angular/core';
-import {
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-  HttpErrorResponse
-} from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { inject } from '@angular/core';
+import { HttpInterceptorFn } from '@angular/common/http';
 import { NotificationService } from './notification.service';
+import { catchError, throwError } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
-export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private notificationService: NotificationService) {}
+export const errorInterceptor: HttpInterceptorFn = (req, next) => {
+  const notificationService = inject(NotificationService);
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(req).pipe(
-      catchError((error: HttpErrorResponse) => {
-        if (error.status === 500) {
-          this.notificationService.showError('Si è verificato un errore interno del server.');
-        }
-        return throwError(() => error);
-      })
-    );
-  }
-}
+  return next(req).pipe(
+    catchError(error => {
+      if (error.status === 401) {
+        notificationService.showError('Non sei autorizzato ad accedere a questa risorsa.');
+      } else if (error.status === 403) {
+        notificationService.showError('Accesso vietato.');
+      } else if (error.status === 404) {
+        notificationService.showError('Risorsa non trovata.');
+      } else
+      if (error.status === 500) {
+        notificationService.showError('Si è verificato un errore interno del server.');
+      }
+      return throwError(() => error);
+    })
+  );
+};
