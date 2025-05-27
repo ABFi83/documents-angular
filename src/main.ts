@@ -9,11 +9,13 @@ import { errorInterceptor } from './app/error.interceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { importProvidersFrom } from '@angular/core';
+import { provideClientHydration } from '@angular/platform-browser';
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
     provideAnimations(),
+    provideClientHydration(),
     importProvidersFrom(ToastrModule.forRoot()),
     provideHttpClient(
       withInterceptors([TokenInterceptor]),
