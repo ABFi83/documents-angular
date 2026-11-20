@@ -1,0 +1,17 @@
+@use 'functions' as fn;
+
+/// Hidden from sight but still focusable and announced (e.g. a file input styled through its label).
+@mixin visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/// Visible keyboard focus ring, AA against white and the light tints.
+@mixin focus-ring {
+  outline: fn.calc-unit(0.25) solid fn.get-color('primary', 700);
+  outline-offset: fn.calc-unit(0.25);
+}

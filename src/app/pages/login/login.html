@@ -1,0 +1,17 @@
+<main>
+  <h1>{{ 'LOGIN.TITLE' | translate }}</h1>
+  <form [formRoot]="credentials">
+    <label for="username">{{ 'LOGIN.USERNAME' | translate }}</label>
+    <input id="username" type="text" autocomplete="username" [formField]="credentials.username" />
+
+    <label for="password">{{ 'LOGIN.PASSWORD' | translate }}</label>
+    <input id="password" type="password" autocomplete="current-password" [formField]="credentials.password" />
+
+    <button type="submit">{{ 'LOGIN.SUBMIT' | translate }}</button>
+  </form>
+
+  @if (errorKey(); as key) {
+    <p role="alert">{{ key | translate }}</p>
+  }
+  <a routerLink="/registration">{{ 'LOGIN.REGISTER' | translate }}</a>
+</main>

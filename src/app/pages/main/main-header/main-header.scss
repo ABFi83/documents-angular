@@ -1,0 +1,62 @@
+@use 'functions' as fn;
+@use 'mixins' as mix;
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+button[popovertarget] {
+  @include mix.icon-button(2.2em);
+
+  justify-content: center;
+  padding: fn.calc-unit(0.5) fn.calc-unit();
+  border-radius: 50%;
+  transition:
+    background 0.2s,
+    color 0.2s;
+  anchor-name: --main-menu-toggle;
+
+  &:hover {
+    background: fn.get-color('primary', 50);
+  }
+}
+
+i {
+  @include mix.material-icon(inherit);
+}
+
+// The menu opens under the toggle (anchor positioning); light dismiss closes it on an outside click.
+[popover] {
+  position-anchor: --main-menu-toggle;
+  position-area: block-end span-inline-start;
+  min-inline-size: fn.calc-unit(22.5);
+  margin: 0;
+  padding: fn.calc-unit(2.25) fn.calc-unit(2.25) fn.calc-unit(1.5);
+  border: none;
+  border-radius: fn.calc-unit(1.25);
+  box-shadow: fn.card-shadow(1, 8%);
+}
+
+p {
+  inline-size: 100%;
+  margin: 0 0 fn.calc-unit(0.75);
+  text-align: center;
+}
+
+p[data-role='user-name'] {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+[popover] button {
+  @include mix.danger-text-button;
+
+  inline-size: 100%;
+  margin-block-end: fn.calc-unit(1.25);
+  padding: fn.calc-unit(0.75) fn.calc-unit(1.75);
+  border-radius: fn.calc-unit();
+  font-size: 1em;
+  font-weight: bold;
+}

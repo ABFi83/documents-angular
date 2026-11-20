@@ -1,0 +1,92 @@
+{
+  "COMMON": {
+    "CANCEL": "Annulla",
+    "CLOSE": "Chiudi",
+    "CONFIRM": "Conferma",
+    "ERROR": "Errore",
+    "HTTP_ERRORS": {
+      "FORBIDDEN": "Accesso vietato.",
+      "NOT_FOUND": "Risorsa non trovata.",
+      "SERVER_ERROR": "Si è verificato un errore interno del server.",
+      "UNAUTHORIZED": "Non sei autorizzato ad accedere a questa risorsa."
+    }
+  },
+  "EXPERIENCES": {
+    "ADD": "Aggiungi esperienza",
+    "DELETE": "Elimina esperienza",
+    "DIALOG": {
+      "COMPANY": "Company:",
+      "COMPANY_PLACEHOLDER": "Company",
+      "CURRENT_POSITION": "Posizione attuale",
+      "DESCRIPTION": "Descrizione:",
+      "DESCRIPTION_PLACEHOLDER": "Descrizione esperienza",
+      "END_DATE": "Data fine:",
+      "ROLE": "Role:",
+      "ROLE_PLACEHOLDER": "Role",
+      "START_DATE": "Data inizio:",
+      "TITLE": "Experiences"
+    },
+    "EDIT": "Modifica esperienza",
+    "TITLE": "Experiences",
+    "VIEW": "Visualizza esperienza"
+  },
+  "LOGIN": {
+    "ERRORS": {
+      "GENERIC": "Errore di login",
+      "INVALID_CREDENTIALS": "Credenziali non valide"
+    },
+    "PASSWORD": "Password:",
+    "REGISTER": "Registrati",
+    "SUBMIT": "Login",
+    "TITLE": "Document",
+    "USERNAME": "Username:"
+  },
+  "MAIN": {
+    "HEADER": {
+      "LOGOUT": "Logout",
+      "MENU": "Menu",
+      "RESET": "Reset",
+      "RESET_ERROR": "Errore durante il reset",
+      "TITLE": "Profile",
+      "WELCOME": "Benvenuto"
+    }
+  },
+  "REGISTRATION": {
+    "CONFIRM_EMAIL": "Conferma Email:",
+    "CONFIRM_PASSWORD": "Conferma Password:",
+    "EMAIL": "Email:",
+    "ERRORS": {
+      "EMAIL_MISMATCH": "Le email non coincidono.",
+      "EMAIL_TAKEN": "Email già registrata.",
+      "GENERIC": "Errore durante la registrazione.",
+      "INVALID_EMAIL": "Inserisci una email valida.",
+      "PASSWORD_MISMATCH": "Le password non coincidono.",
+      "WEAK_PASSWORD": "La password deve avere almeno 8 caratteri, una lettera, un numero e un carattere speciale."
+    },
+    "PASSWORD": "Password:",
+    "SUBMIT": "Registrati",
+    "TITLE": "Registrazione"
+  },
+  "SKILLS": {
+    "ADD": "Aggiungi skill",
+    "DIALOG": {
+      "PLACEHOLDER": "Skill",
+      "REMOVE": "Rimuovi {{name}}",
+      "TITLE": "SKILLS"
+    },
+    "REMOVE": "Rimuovi skill",
+    "TITLE": "Skills"
+  },
+  "UPLOAD": {
+    "CHOOSE_FILE": "Carica il tuo CV",
+    "CLEAR": "Rimuovi file",
+    "ERRORS": {
+      "NOT_PDF": "Il formato deve essere PDF",
+      "PROCESS_FAILED": "Errore durante il caricamento del documento.",
+      "UPLOAD_FAILED": "Errore durante il caricamento del documento. Riprova."
+    },
+    "PROCEED": "Procedi",
+    "PROGRESS": "Caricamento in corso",
+    "SUCCESS": "Caricamento completato con successo!"
+  }
+}

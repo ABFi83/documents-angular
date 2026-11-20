@@ -1,0 +1,25 @@
+@use 'mixins' as mix;
+
+:host {
+  display: block;
+}
+
+header {
+  @include mix.section-header;
+}
+
+ul {
+  @include mix.bordered-list;
+}
+
+button {
+  @include mix.icon-button;
+}
+
+button[data-role='add'] {
+  font-size: 2em;
+}
+
+i {
+  @include mix.material-icon;
+}

@@ -1,0 +1,64 @@
+@use 'functions' as fn;
+@use 'mixins' as mix;
+
+dialog {
+  @include mix.dialog-surface(fn.calc-unit(52.5));
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: fn.calc-unit(1.5);
+}
+
+label {
+  @include mix.field-label;
+
+  display: block;
+  margin-block-end: fn.calc-unit(0.5);
+}
+
+input:not([type='checkbox']),
+textarea {
+  @include mix.text-field;
+
+  box-sizing: border-box;
+  inline-size: 100%;
+  margin-block-end: fn.calc-unit();
+}
+
+textarea {
+  block-size: fn.calc-unit(25);
+}
+
+div[data-role='dates'] {
+  display: flex;
+  gap: fn.calc-unit(2.5);
+  justify-content: space-between;
+
+  > div {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+div[data-role='current'] {
+  display: flex;
+  gap: fn.calc-unit();
+  align-items: center;
+  inline-size: 100%;
+  margin-block-start: fn.calc-unit(0.5);
+
+  label {
+    margin: 0;
+    font-weight: 400;
+    cursor: pointer;
+  }
+
+  input {
+    margin: 0;
+    accent-color: fn.get-color('primary', 700);
+  }
+}

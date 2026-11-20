@@ -1,0 +1,14 @@
+/// Ligature icon from the Material Icons font (loaded in index.html): `<i aria-hidden="true">edit</i>`.
+@mixin material-icon($size: 1.2em) {
+  display: inline-block;
+  font-family: 'Material Icons', sans-serif;
+  font-size: $size;
+  font-style: normal;
+  font-weight: normal;
+  font-feature-settings: 'liga';
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+}

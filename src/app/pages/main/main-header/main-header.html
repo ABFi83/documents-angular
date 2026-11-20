@@ -1,0 +1,13 @@
+<header>
+  <h1>{{ 'MAIN.HEADER.TITLE' | translate }}</h1>
+  <button type="button" popovertarget="main-menu" [attr.aria-label]="'MAIN.HEADER.MENU' | translate" [title]="'MAIN.HEADER.MENU' | translate">
+    <i aria-hidden="true">menu</i>
+  </button>
+  <div id="main-menu" popover #menu>
+    <p>{{ 'MAIN.HEADER.WELCOME' | translate }}</p>
+    @let currentUser = user();
+    <p data-role="user-name">{{ currentUser?.name }} {{ currentUser?.surname }}</p>
+    <button type="button" (click)="reset()">{{ 'MAIN.HEADER.RESET' | translate }}</button>
+    <button type="button" (click)="logout()">{{ 'MAIN.HEADER.LOGOUT' | translate }}</button>
+  </div>
+</header>

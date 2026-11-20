@@ -1,0 +1,37 @@
+@use 'functions' as fn;
+
+/// Text-like input (text, password, email, date, textarea).
+@mixin text-field {
+  padding: fn.calc-unit() fn.calc-unit(1.25);
+  border: 1px solid fn.get-color('primary', 200);
+  border-radius: fn.calc-unit(0.75);
+  font: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+
+  &:focus-visible {
+    border-color: fn.get-color('primary', 700);
+    box-shadow: 0 0 0 1px fn.get-color('primary', 700);
+  }
+
+  &:disabled {
+    background: fn.get-color('neutral', 100);
+  }
+
+  &[data-error='true'] {
+    border: fn.calc-unit(0.25) solid fn.get-color('error', 700);
+  }
+}
+
+/// Field label in the primary hue.
+@mixin field-label {
+  font-weight: 500;
+  color: fn.get-color('primary', 700);
+}
+
+/// Inline error/validation message.
+@mixin error-text {
+  margin-block: fn.calc-unit(1.25) 0;
+  color: fn.get-color('error', 700);
+  text-align: center;
+}

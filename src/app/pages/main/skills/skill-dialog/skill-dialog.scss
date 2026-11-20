@@ -1,0 +1,65 @@
+@use 'functions' as fn;
+@use 'mixins' as mix;
+
+dialog {
+  @include mix.dialog-surface;
+}
+
+input {
+  @include mix.text-field;
+}
+
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: fn.calc-unit(1.5);
+  align-items: center;
+  min-inline-size: fn.calc-unit(40);
+  max-inline-size: fn.calc-unit(68.75);
+  min-block-size: fn.calc-unit(6);
+  margin: 0 0 fn.calc-unit(1.25);
+  padding: fn.calc-unit(1.5) fn.calc-unit(2);
+  border: fn.calc-unit(0.25) solid fn.get-color('primary', 200);
+  border-radius: fn.calc-unit(1.5);
+  background: linear-gradient(135deg, fn.soft-tint('primary'), fn.get-color('primary', 50));
+  box-shadow: fn.card-shadow();
+  list-style: none;
+}
+
+li {
+  position: relative;
+  display: flex;
+  flex: 1 1 calc(25% - #{fn.calc-unit(1.5)});
+  align-items: center;
+  justify-content: center;
+  min-inline-size: fn.calc-unit(18.75);
+  max-inline-size: fn.calc-unit(25);
+  min-block-size: fn.calc-unit(6.25);
+  padding: fn.calc-unit(0.75) fn.calc-unit(1.5);
+  overflow: hidden;
+  border: 1px solid fn.get-color('primary', 100);
+  border-radius: fn.calc-unit(2);
+  background: white;
+  box-shadow: fn.card-shadow(0.5);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(fn.calc-unit(-0.25));
+    box-shadow: fn.card-shadow(1, 20%);
+  }
+}
+
+li button {
+  @include mix.danger-text-button;
+
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: fn.calc-unit();
+  border-radius: 50%;
+  font-size: 1.2em;
+  transform: translateY(-50%);
+}

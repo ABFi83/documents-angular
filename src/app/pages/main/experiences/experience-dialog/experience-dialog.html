@@ -1,0 +1,43 @@
+<dialog #dialog aria-labelledby="experience-dialog-title" (close)="cancel()">
+  <h2 id="experience-dialog-title">{{ 'EXPERIENCES.DIALOG.TITLE' | translate }}</h2>
+  <form [formRoot]="experienceForm">
+    <label for="experience-company">{{ 'EXPERIENCES.DIALOG.COMPANY' | translate }}</label>
+    <input
+      id="experience-company"
+      [placeholder]="'EXPERIENCES.DIALOG.COMPANY_PLACEHOLDER' | translate"
+      [formField]="experienceForm.company_name"
+      [attr.data-error]="showErrors() && experienceForm.company_name().invalid()"
+    />
+
+    <label for="experience-role">{{ 'EXPERIENCES.DIALOG.ROLE' | translate }}</label>
+    <input
+      id="experience-role"
+      [placeholder]="'EXPERIENCES.DIALOG.ROLE_PLACEHOLDER' | translate"
+      [formField]="experienceForm.role"
+      [attr.data-error]="showErrors() && experienceForm.role().invalid()"
+    />
+
+    <label for="experience-description">{{ 'EXPERIENCES.DIALOG.DESCRIPTION' | translate }}</label>
+    <textarea id="experience-description" [placeholder]="'EXPERIENCES.DIALOG.DESCRIPTION_PLACEHOLDER' | translate" [formField]="experienceForm.description"></textarea>
+
+    <div data-role="dates">
+      <div>
+        <label for="experience-start">{{ 'EXPERIENCES.DIALOG.START_DATE' | translate }}</label>
+        <input id="experience-start" type="date" [formField]="experienceForm.start_date" [attr.data-error]="showErrors() && experienceForm.start_date().invalid()" />
+      </div>
+      <div>
+        <label for="experience-end">{{ 'EXPERIENCES.DIALOG.END_DATE' | translate }}</label>
+        <input id="experience-end" type="date" [formField]="experienceForm.end_date" [attr.data-error]="showErrors() && experienceForm.end_date().invalid()" />
+        <div data-role="current">
+          <input id="experience-current" type="checkbox" [formField]="experienceForm.is_current" />
+          <label for="experience-current">{{ 'EXPERIENCES.DIALOG.CURRENT_POSITION' | translate }}</label>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <button type="button" (click)="cancel()">{{ 'COMMON.CANCEL' | translate }}</button>
+      <button type="submit" [disabled]="viewing()">{{ 'COMMON.CONFIRM' | translate }}</button>
+    </footer>
+  </form>
+</dialog>

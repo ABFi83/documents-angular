@@ -1,0 +1,68 @@
+@use 'functions' as fn;
+@use 'a11y' as *;
+
+/// Solid primary action (login, registration, dialog actions).
+@mixin primary-button($padding: fn.calc-unit(1.25)) {
+  padding: $padding;
+  border: none;
+  border-radius: fn.calc-unit(0.75);
+  background: fn.get-color('primary', 700);
+  color: white;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: fn.get-color('primary', 800);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  &:disabled {
+    background: fn.get-color('neutral', 600);
+    cursor: not-allowed;
+  }
+}
+
+/// Borderless icon-only button (list actions, menu toggle).
+@mixin icon-button($size: 1.5em) {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border: none;
+  background: none;
+  color: fn.get-color('primary', 700);
+  font-size: $size;
+  cursor: pointer;
+
+  &:hover {
+    color: fn.get-color('primary', 900);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+/// Text button in the error hue (menu reset, removing a chip).
+@mixin danger-text-button {
+  border: none;
+  background: none;
+  color: fn.get-color('error', 700);
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+
+  &:hover {
+    background: fn.get-color('error', 50);
+    color: fn.get-color('error', 900);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}

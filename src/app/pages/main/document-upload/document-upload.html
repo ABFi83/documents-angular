@@ -1,0 +1,26 @@
+@let selected = file();
+<section (dragover)="onDragOver($event)" (drop)="onDrop($event)">
+  <input id="file-input" type="file" (change)="onFileSelected($event)" />
+  <label for="file-input">{{ selected && isPdf() ? selected.name : ('UPLOAD.CHOOSE_FILE' | translate) }}</label>
+</section>
+
+@if (selected) {
+  <button type="button" data-role="clear" [attr.aria-label]="'UPLOAD.CLEAR' | translate" (click)="clearFile()">
+    <span aria-hidden="true">🗑️</span>
+  </button>
+}
+@if (isPdf() && !isUploading()) {
+  <button type="button" data-role="proceed" (click)="upload()">{{ 'UPLOAD.PROCEED' | translate }}</button>
+}
+@if (isUploading()) {
+  <div role="progressbar" [attr.aria-label]="'UPLOAD.PROGRESS' | translate"><div></div></div>
+}
+@if (uploadSuccess()) {
+  <p role="status" data-role="success">{{ 'UPLOAD.SUCCESS' | translate }}</p>
+}
+@if (selected && !isPdf()) {
+  <p role="alert">{{ 'UPLOAD.ERRORS.NOT_PDF' | translate }}</p>
+}
+@if (errorMessage(); as message) {
+  <p role="alert">{{ message }}</p>
+}

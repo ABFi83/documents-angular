@@ -1,0 +1,40 @@
+@use 'functions' as fn;
+@use 'buttons' as *;
+
+/// Native modal `<dialog>` surface with a centered title and a cancel/confirm footer.
+@mixin dialog-surface($min-inline-size: fn.calc-unit(40)) {
+  min-inline-size: $min-inline-size;
+  max-inline-size: 90vw;
+  padding: fn.calc-unit(3.5) fn.calc-unit(4) fn.calc-unit(2.75);
+  border: none;
+  border-radius: fn.calc-unit(2);
+  box-shadow: 0 fn.calc-unit(0.5) fn.calc-unit(3) fn.color-mix-func(fn.get-color('primary'), transparent, 18%);
+
+  &::backdrop {
+    background: fn.color-mix-func(black, transparent, 25%);
+  }
+
+  &[open] {
+    display: flex;
+    flex-direction: column;
+    gap: fn.calc-unit(1.5);
+  }
+
+  h2 {
+    margin-block-end: fn.calc-unit(1.25);
+    color: fn.get-color('primary', 700);
+    font-size: 1.17em;
+    text-align: center;
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    gap: fn.calc-unit(1.25);
+    margin-block-start: fn.calc-unit(1.25);
+  }
+
+  footer button {
+    @include primary-button(fn.calc-unit() fn.calc-unit(2.25));
+  }
+}

@@ -1,0 +1,106 @@
+@use 'functions' as fn;
+@use 'mixins' as mix;
+
+:host {
+  display: block;
+}
+
+section {
+  position: relative;
+  inline-size: 50%;
+  margin: 0 auto;
+  padding: fn.calc-unit(2.5);
+  border: fn.calc-unit(0.25) dashed fn.get-color('primary', 200);
+  border-radius: fn.calc-unit(1.25);
+  background: fn.soft-tint('primary');
+  text-align: center;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background: fn.get-color('primary', 50);
+  }
+}
+
+input {
+  @include mix.visually-hidden;
+}
+
+label {
+  display: inline-block;
+  margin-block-start: fn.calc-unit(1.25);
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+input:focus-visible + label {
+  @include mix.focus-ring;
+}
+
+button[data-role='clear'] {
+  @include mix.danger-text-button;
+
+  position: fixed;
+  inset-block-end: fn.calc-unit(1.25);
+  inset-inline-end: fn.calc-unit(1.25);
+  font-size: 1.5em;
+}
+
+button[data-role='proceed'] {
+  display: block;
+  margin: fn.calc-unit(2.5) auto 0;
+  padding: fn.calc-unit(1.25) fn.calc-unit(2.5);
+  border: none;
+  border-radius: fn.calc-unit(0.625);
+  background: fn.get-color('primary', 200);
+  color: black;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background: fn.get-color('primary', 300);
+  }
+
+  &:focus-visible {
+    @include mix.focus-ring;
+  }
+}
+
+[role='progressbar'] {
+  inline-size: 50%;
+  block-size: fn.calc-unit(2.5);
+  margin: fn.calc-unit(2.5) auto 0;
+  overflow: hidden;
+  border-radius: fn.calc-unit(0.625);
+  background: fn.get-color('neutral', 100);
+
+  > div {
+    inline-size: 0%;
+    block-size: 100%;
+    background: fn.get-color('primary', 200);
+    animation: progress 10s linear infinite;
+  }
+}
+
+@keyframes progress {
+  from {
+    inline-size: 0%;
+  }
+
+  to {
+    inline-size: 100%;
+  }
+}
+
+p {
+  @include mix.error-text;
+
+  font-size: 0.9em;
+}
+
+p[data-role='success'] {
+  margin-block-start: fn.calc-unit(2.5);
+  color: fn.get-color('success', 800);
+  font-size: 1em;
+}

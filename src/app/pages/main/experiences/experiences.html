@@ -1,0 +1,24 @@
+<header>
+  <h2>{{ 'EXPERIENCES.TITLE' | translate }}</h2>
+  <button type="button" data-role="add" [attr.aria-label]="'EXPERIENCES.ADD' | translate" [title]="'EXPERIENCES.ADD' | translate" (click)="add()">
+    <i aria-hidden="true">add_circle_outline</i>
+  </button>
+</header>
+<ul>
+  @for (experience of items(); track experience.id) {
+    <li>
+      <button type="button" data-role="view" [title]="'EXPERIENCES.VIEW' | translate" (click)="view(experience)">{{ experience.company_name }} - {{ experience.role }}</button>
+      <div>
+        <button type="button" [attr.aria-label]="'EXPERIENCES.EDIT' | translate" [title]="'EXPERIENCES.EDIT' | translate" (click)="edit(experience)">
+          <i aria-hidden="true">edit</i>
+        </button>
+        <button type="button" [attr.aria-label]="'EXPERIENCES.DELETE' | translate" [title]="'EXPERIENCES.DELETE' | translate" (click)="delete(experience)">
+          <i aria-hidden="true">delete</i>
+        </button>
+      </div>
+    </li>
+  }
+</ul>
+@if (dialog(); as state) {
+  <app-experience-dialog [experience]="state.experience" [viewing]="state.viewing" (confirmed)="save($event)" (cancelled)="closeDialog()" />
+}

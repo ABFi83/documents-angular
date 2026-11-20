@@ -1,0 +1,120 @@
+#!/usr/bin/env node
+
+const { execSync } = require("child_process");
+const path = require("path");
+const fs = require("fs");
+
+const repoRoot = path.join(__dirname, "..");
+const ZERO_SHA = "0000000000000000000000000000000000000000";
+const EMPTY_TREE_SHA = "4b825dc642cb6eb9a060e54bf8d69288fbee4904";
+const MAX_ARGS_LENGTH = 6000;
+
+function sh(cmd) {
+  return execSync(cmd, { encoding: "utf8" }).trim();
+}
+
+// fd 0 rather than "/dev/stdin": Windows has no such device and Node resolves the path against the
+// current drive, so the hook would die with ENOENT on C:\dev\stdin before linting anything.
+let stdin = "";
+try {
+  stdin = fs.readFileSync(0, "utf8").trim();
+} catch {
+  console.log("⚠️  pre-push: could not read the ref list from stdin, skipping lint:check");
+  process.exit(0);
+}
+
+if (!stdin) process.exit(0);
+
+const changedFiles = new Set();
+
+for (const line of stdin.split("\n").filter(Boolean)) {
+  const [, localSha] = line.trim().split(" ");
+
+  if (localSha === ZERO_SHA) continue; // branch deletion
+
+  const unpushed = sh(`git rev-list ${localSha} --not --remotes`).split("\n").filter(Boolean);
+  if (unpushed.length === 0) continue;
+
+  const oldest = unpushed[unpushed.length - 1];
+  let base;
+  try {
+    base = sh(`git rev-parse --verify --quiet ${oldest}~1`);
+  } catch {
+    base = EMPTY_TREE_SHA;
+  }
+  const range = `${base}..${localSha}`;
+
+  try {
+    sh(`git diff --name-only ${range}`)
+      .split("\n")
+      .filter(Boolean)
+      .forEach((f) => changedFiles.add(f));
+  } catch {
+    // range not resolvable, skip
+  }
+}
+
+// Keep only src files relevant to linters
+const EXT = /\.(ts|html|scss|css)$/;
+
+const relevant = [...changedFiles].filter(
+  (f) => EXT.test(f) && fs.existsSync(path.join(repoRoot, f)),
+);
+
+if (relevant.length === 0) {
+  console.log("✅ No src files changed, skipping lint:check");
+  process.exit(0);
+}
+
+const tsHtml = relevant.filter((f) => /\.(ts|html)$/.test(f));
+const scss = relevant.filter((f) => /\.(scss|css)$/.test(f));
+
+console.log(`🔍 lint:check on ${relevant.length} file(s)...`);
+
+function inBatches(files) {
+  const batches = [];
+  let current = [];
+  let length = 0;
+  for (const file of files) {
+    if (current.length > 0 && length + file.length + 1 > MAX_ARGS_LENGTH) {
+      batches.push(current);
+      current = [];
+      length = 0;
+    }
+    current.push(file);
+    length += file.length + 1;
+  }
+  if (current.length > 0) batches.push(current);
+  return batches;
+}
+
+function passes(command, files) {
+  let ok = true;
+  for (const batch of inBatches(files)) {
+    try {
+      execSync(`pnpm exec ${command} ${batch.join(" ")}`, {
+        cwd: repoRoot,
+        stdio: "inherit",
+      });
+    } catch {
+      ok = false;
+    }
+  }
+  return ok;
+}
+
+const results = [
+  passes("prettier --check", tsHtml),
+  passes("eslint", tsHtml),
+  passes("stylelint", scss),
+];
+const failed = results.includes(false);
+
+if (failed) {
+  console.error(
+    "❌ lint:check failed. Please fix the above issues and try again.",
+  );
+  process.exit(1);
+}
+
+console.log("✅ lint:check passed");

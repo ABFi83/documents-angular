@@ -1,0 +1,37 @@
+@use 'functions' as fn;
+
+/// Title row of a profile section: heading on the start side, add button on the end side.
+@mixin section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block-start: fn.calc-unit(1.25);
+  padding-inline: fn.calc-unit(2.25);
+
+  h2 {
+    font-size: 2em;
+  }
+}
+
+/// Bordered list of profile rows with an action area on the end side.
+@mixin bordered-list {
+  position: relative;
+  margin: 0;
+  padding: 0 0 fn.calc-unit(1.25);
+  border: fn.calc-unit(0.25) solid fn.get-color('primary', 200);
+  border-radius: fn.calc-unit(2);
+  background: fn.soft-tint('primary');
+  list-style: none;
+
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: fn.calc-unit(1.25) fn.calc-unit(2.25);
+    border-block-end: 1px solid fn.get-color('primary', 50);
+  }
+
+  li:last-child {
+    border-block-end: none;
+  }
+}

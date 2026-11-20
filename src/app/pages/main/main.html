@@ -1,0 +1,10 @@
+<app-main-header [user]="user()" (profileReset)="onProfileReset()" />
+<main>
+  @if (showDocumentUpload()) {
+    <app-document-upload (uploadCompleted)="onUploadCompleted()" />
+  } @else {
+    @let profile = user();
+    <app-skills [skills]="profile?.skill ?? []" />
+    <app-experiences [experiences]="profile?.experience ?? []" />
+  }
+</main>

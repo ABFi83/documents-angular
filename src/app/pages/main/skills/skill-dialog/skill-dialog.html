@@ -1,0 +1,28 @@
+<dialog #dialog aria-labelledby="skill-dialog-title" (close)="cancel()">
+  <h2 id="skill-dialog-title">{{ 'SKILLS.DIALOG.TITLE' | translate }}</h2>
+  <input
+    list="skill-suggestions"
+    [attr.aria-label]="'SKILLS.DIALOG.PLACEHOLDER' | translate"
+    [placeholder]="'SKILLS.DIALOG.PLACEHOLDER' | translate"
+    [formField]="search.name"
+    (change)="addTyped()"
+    (blur)="addTyped()"
+  />
+  <datalist id="skill-suggestions">
+    @for (option of suggestions(); track option.id) {
+      <option [value]="option.name"></option>
+    }
+  </datalist>
+  <ul>
+    @for (skill of added(); track skill.name) {
+      <li>
+        {{ skill.name }}
+        <button type="button" [attr.aria-label]="'SKILLS.DIALOG.REMOVE' | translate: { name: skill.name }" (click)="remove(skill)">&times;</button>
+      </li>
+    }
+  </ul>
+  <footer>
+    <button type="button" (click)="cancel()">{{ 'COMMON.CANCEL' | translate }}</button>
+    <button type="button" [disabled]="added().length === 0" (click)="confirm()">{{ 'COMMON.CONFIRM' | translate }}</button>
+  </footer>
+</dialog>

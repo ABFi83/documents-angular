@@ -1,0 +1,16 @@
+{
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "editor.insertSpaces": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.fixAll": "always"
+  },
+  "files.eol": "\n",
+  "stylelint.validate": ["css", "scss"],
+  "stylelint.enable": true,
+  "github.copilot.chat.commitMessageGeneration.instructions": [{ "file": "commit-message.md" }],
+  "conventionalCommits.scopes": ["project", "auth", "profile", "documents"]
+}

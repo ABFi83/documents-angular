@@ -1,0 +1,26 @@
+@use 'variables' as variables;
+
+@function calc-unit($multipler: 1) {
+  @return calc(#{variables.$base-unit} * #{$multipler});
+}
+
+// Mixes in oklch: mix a tint with the `white` / `black` keywords (no hue), never an achromatic `oklch(… 0 0deg)`
+// literal — its explicit hue is interpolated too and shifts the tint.
+@function color-mix-func($color1, $color2, $percentage, $space-color: in oklch) {
+  @return color-mix($space-color, $color1 $percentage, $color2);
+}
+
+/// A palette token from `styles.scss` (`--palette-<appearance>-<variant>`).
+@function get-color($appearance, $variant: 500) {
+  @return var(--palette-#{$appearance}-#{$variant});
+}
+
+/// Pale surface of an appearance: its 50 shade halfway to white (list and dropzone backgrounds).
+@function soft-tint($appearance) {
+  @return color-mix-func(get-color($appearance, 50), white, 50%);
+}
+
+/// Soft elevation for cards, menus and dialogs.
+@function card-shadow($blur: 1, $alpha: 10%) {
+  @return 0 calc-unit(0.25) calc-unit($blur) 0 color-mix-func(black, transparent, $alpha);
+}

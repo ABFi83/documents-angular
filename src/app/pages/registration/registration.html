@@ -1,0 +1,22 @@
+<main>
+  <form [formRoot]="registration">
+    <h1>{{ 'REGISTRATION.TITLE' | translate }}</h1>
+    <label for="email">{{ 'REGISTRATION.EMAIL' | translate }}</label>
+    <input id="email" type="email" autocomplete="email" [formField]="registration.email" />
+
+    <label for="confirmEmail">{{ 'REGISTRATION.CONFIRM_EMAIL' | translate }}</label>
+    <input id="confirmEmail" type="email" autocomplete="email" [formField]="registration.confirmEmail" />
+
+    @if (errorKey(); as key) {
+      <p role="alert">{{ key | translate }}</p>
+    }
+
+    <label for="password">{{ 'REGISTRATION.PASSWORD' | translate }}</label>
+    <input id="password" type="password" autocomplete="new-password" [formField]="registration.password" />
+
+    <label for="confirmPassword">{{ 'REGISTRATION.CONFIRM_PASSWORD' | translate }}</label>
+    <input id="confirmPassword" type="password" autocomplete="new-password" [formField]="registration.confirmPassword" />
+
+    <button type="submit">{{ 'REGISTRATION.SUBMIT' | translate }}</button>
+  </form>
+</main>

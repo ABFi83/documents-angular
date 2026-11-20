@@ -1,0 +1,7 @@
+/// Shared mixins, one partial per area. Consumers keep `@use 'mixins' as mix;`.
+@forward 'a11y';
+@forward 'icons';
+@forward 'buttons';
+@forward 'forms';
+@forward 'lists';
+@forward 'dialogs';

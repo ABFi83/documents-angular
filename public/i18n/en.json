@@ -1,0 +1,92 @@
+{
+  "COMMON": {
+    "CANCEL": "Cancel",
+    "CLOSE": "Close",
+    "CONFIRM": "Confirm",
+    "ERROR": "Error",
+    "HTTP_ERRORS": {
+      "FORBIDDEN": "Access denied.",
+      "NOT_FOUND": "Resource not found.",
+      "SERVER_ERROR": "An internal server error occurred.",
+      "UNAUTHORIZED": "You are not authorized to access this resource."
+    }
+  },
+  "EXPERIENCES": {
+    "ADD": "Add experience",
+    "DELETE": "Delete experience",
+    "DIALOG": {
+      "COMPANY": "Company:",
+      "COMPANY_PLACEHOLDER": "Company",
+      "CURRENT_POSITION": "Current position",
+      "DESCRIPTION": "Description:",
+      "DESCRIPTION_PLACEHOLDER": "Experience description",
+      "END_DATE": "End date:",
+      "ROLE": "Role:",
+      "ROLE_PLACEHOLDER": "Role",
+      "START_DATE": "Start date:",
+      "TITLE": "Experiences"
+    },
+    "EDIT": "Edit experience",
+    "TITLE": "Experiences",
+    "VIEW": "View experience"
+  },
+  "LOGIN": {
+    "ERRORS": {
+      "GENERIC": "Login error",
+      "INVALID_CREDENTIALS": "Invalid credentials"
+    },
+    "PASSWORD": "Password:",
+    "REGISTER": "Sign up",
+    "SUBMIT": "Login",
+    "TITLE": "Document",
+    "USERNAME": "Username:"
+  },
+  "MAIN": {
+    "HEADER": {
+      "LOGOUT": "Logout",
+      "MENU": "Menu",
+      "RESET": "Reset",
+      "RESET_ERROR": "Error during reset",
+      "TITLE": "Profile",
+      "WELCOME": "Welcome"
+    }
+  },
+  "REGISTRATION": {
+    "CONFIRM_EMAIL": "Confirm email:",
+    "CONFIRM_PASSWORD": "Confirm password:",
+    "EMAIL": "Email:",
+    "ERRORS": {
+      "EMAIL_MISMATCH": "The emails do not match.",
+      "EMAIL_TAKEN": "Email already registered.",
+      "GENERIC": "Error during registration.",
+      "INVALID_EMAIL": "Enter a valid email.",
+      "PASSWORD_MISMATCH": "The passwords do not match.",
+      "WEAK_PASSWORD": "The password must have at least 8 characters, one letter, one number and one special character."
+    },
+    "PASSWORD": "Password:",
+    "SUBMIT": "Sign up",
+    "TITLE": "Sign up"
+  },
+  "SKILLS": {
+    "ADD": "Add skill",
+    "DIALOG": {
+      "PLACEHOLDER": "Skill",
+      "REMOVE": "Remove {{name}}",
+      "TITLE": "SKILLS"
+    },
+    "REMOVE": "Remove skill",
+    "TITLE": "Skills"
+  },
+  "UPLOAD": {
+    "CHOOSE_FILE": "Upload your CV",
+    "CLEAR": "Remove file",
+    "ERRORS": {
+      "NOT_PDF": "The file must be a PDF",
+      "PROCESS_FAILED": "Error while uploading the document.",
+      "UPLOAD_FAILED": "Error while uploading the document. Please try again."
+    },
+    "PROCEED": "Continue",
+    "PROGRESS": "Uploading",
+    "SUCCESS": "Upload completed successfully!"
+  }
+}

@@ -1,0 +1,13 @@
+<ul>
+  @for (notification of notifications(); track notification.id) {
+    <li role="alert">
+      <p>
+        <strong>{{ 'COMMON.ERROR' | translate }}</strong>
+        {{ notification.message }}
+      </p>
+      <button type="button" [attr.aria-label]="'COMMON.CLOSE' | translate" (click)="dismiss(notification.id)">
+        <i aria-hidden="true">close</i>
+      </button>
+    </li>
+  }
+</ul>
