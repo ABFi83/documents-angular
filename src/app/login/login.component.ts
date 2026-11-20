@@ -1,22 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { LoginService } from './login.service';
 import { firstValueFrom } from 'rxjs';
 import { UserService } from '../user/user.service';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule],
   templateUrl: './login.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   username = '';
   password = '';
-  errorMessage: string | null = null; // Aggiunto per gestire i messaggi di errore
+  errorMessage = signal<string | null>(null); // Aggiunto per gestire i messaggi di errore
 
   constructor(private router: Router, private loginService: LoginService) {}
 
@@ -27,10 +28,10 @@ export class LoginComponent {
         this.loginService.setToken(response.access_token);
         this.router.navigate(['/main']);
       } else {
-        this.errorMessage = 'Credenziali non valide';
+        this.errorMessage.set('Credenziali non valide');
       }
     } catch (error) {
-      this.errorMessage = 'Errore di login';
+      this.errorMessage.set('Errore di login');
     }
   }
 

@@ -1,13 +1,14 @@
-import { Component, EventEmitter, Output, Input, ViewChild, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Output, Input, ViewChild, OnInit, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
+
 import { FormsModule, NgForm } from '@angular/forms';
 import { Experience } from '../model/model';
 
 @Component({
   selector: 'app-experience-popup',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './experience-popup.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./experience-popup.component.css']
 })
 export class ExperiencePopupComponent implements OnInit, OnChanges {

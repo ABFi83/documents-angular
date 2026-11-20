@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { Component, ChangeDetectionStrategy, input, linkedSignal } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { Experience } from '../model/model';
 import { ExperiencePopupComponent } from './experience-popup.component';
 import { ExperienceService } from './experience.service';
@@ -8,35 +8,21 @@ import { ExperienceService } from './experience.service';
 @Component({
   selector: 'app-experience',
   standalone: true,
-  imports: [CommonModule, ExperiencePopupComponent],
+  imports: [ExperiencePopupComponent],
   templateUrl: './experience.component.html',
   styleUrls: ['./experience.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [DatePipe]
 })
 export class ExperienceComponent {
-  @Input() experiences: Experience[] = [];
+  experiencesInput = input<Experience[]>([], { alias: "experiences" });
+  experiences = linkedSignal(() => sortExperiences(this.experiencesInput()));
 
   userExperiences: Experience | undefined;
   showAddExperiencePopup = false;
   isViewing=false;
 
   constructor(private experienceService:ExperienceService) { }
-
-  ngOnInit(): void {
-    if (this.experiences && Array.isArray(this.experiences)) {
-      this.experiences.sort((a: Experience, b: Experience) => {
-        if (a.is_current && !b.is_current) {
-          return -1;
-        } else if (!a.is_current && b.is_current) {
-          return 1;
-        } else {
-          const dateA = new Date(a.end_date || '9999-12-31');
-          const dateB = new Date(b.end_date || '9999-12-31');
-          return dateB.getTime() - dateA.getTime();
-        }
-      });
-    }
-  }
 
   addExperience() {
     this.showAddExperiencePopup = true;
@@ -52,8 +38,7 @@ export class ExperienceComponent {
         console.log('OK', response);
         this.experienceService.getExperiences().subscribe({
           next: (response) => {
-            this.experiences = response;
-            console.log('Experiences:', this.experiences);
+            this.experiences.set(sortExperiences(response));
           }
         });
       },
@@ -85,11 +70,19 @@ export class ExperienceComponent {
   deleteExperience(experience: Experience) {
     this.experienceService.deleteExperience(experience.id).subscribe({
       next: (response) => {
-        this.experiences = this.experiences.filter(e => e.id !== experience.id);
+        this.experiences.update(list => list.filter(e => e.id !== experience.id));
       },
       error: (error) => {
         console.error('Error saving experience:', error);
       }
     });
   }
+}
+
+// Current position first, then by end date descending.
+function sortExperiences(experiences: Experience[]): Experience[] {
+  return [...experiences].sort((a, b) => {
+    if (a.is_current !== b.is_current) return a.is_current ? -1 : 1;
+    return new Date(b.end_date || "9999-12-31").getTime() - new Date(a.end_date || "9999-12-31").getTime();
+  });
 }

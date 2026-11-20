@@ -1,13 +1,14 @@
-import { Component, EventEmitter, Output, Input, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Output, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
 import { Skill } from '../model/model';
 
 @Component({
   selector: 'app-skill-popup',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './skill-popup.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./skill-popup.component.css']
 })
 export class SkillPopupComponent implements OnInit {

@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+
+import { Component, ChangeDetectionStrategy, input, linkedSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Skill } from '../model/model';
 import { SkillPopupComponent } from './skill-popup.component';
@@ -7,12 +7,14 @@ import { SkillService } from './skill.service';
 
 @Component({
   selector: 'app-skill',
-  imports: [CommonModule, FormsModule, SkillPopupComponent],
+  imports: [FormsModule, SkillPopupComponent],
   templateUrl: './skill.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./skill.component.css']
 })
 export class SkillComponent {
-  @Input() skills: Skill[] = [];
+  skillsInput = input<Skill[]>([], { alias: "skills" });
+  skills = linkedSignal(() => this.skillsInput());
   userSkills: Skill[] = [];
 
   showAddSkillPopup = false;
@@ -23,7 +25,7 @@ export class SkillComponent {
 
     this.skillService.deleteSkill(skill).subscribe({
       next: (response) => {
-        this.skills = this.skills.filter(s => s.id !== skill.id);
+        this.skills.update(skills => skills.filter(s => s.id !== skill.id));
         console.log('Skills saved successfully:', response);
       },
       error: (error) => {
@@ -33,15 +35,15 @@ export class SkillComponent {
   }
 
   addSkill() {
-    this.userSkills = this.skills ? [...this.skills] : [];
+    this.userSkills = [...this.skills()];
     console.log('userSkills on open:', this.userSkills);
     this.showAddSkillPopup = true;
   }
 
   onSkillPopupConfirm(event: { skills: { id: number,  name: string; }[] }) {
-    this.skills = event.skills.map(s => ({ ...s }));
+    this.skills.set(event.skills.map(s => ({ ...s })));
     this.showAddSkillPopup = false;
-    this.skillService.postSkill(this.skills).subscribe({
+    this.skillService.postSkill(this.skills()).subscribe({
         next: (response) => {
           console.log('Skills saved successfully:', response);
         },

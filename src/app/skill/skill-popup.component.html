@@ -3,13 +3,17 @@
     <h3>SKILLS</h3>
     <input [(ngModel)]="skillName" placeholder="Skill" list="skills-list" (input)="onSkillInput()" (blur)="onSkillBlur()" (change)="onSkillSelect()" />
     <datalist id="skills-list">
-      <option *ngFor="let option of filteredSkills" [value]="option.name" (click)="onSkillOptionClick(option)"></option>
+      @for (option of filteredSkills; track option) {
+        <option [value]="option.name" (click)="onSkillOptionClick(option)"></option>
+      }
     </datalist>
     <div class="added-skills">
-      <span *ngFor="let s of addedSkills" class="added-skill">
-        {{ s.name }}
-        <button type="button" (click)="removeAddedSkill(s)" class="remove-skill-btn">&times;</button>
-      </span>
+      @for (s of addedSkills; track s) {
+        <span class="added-skill">
+          {{ s.name }}
+          <button type="button" (click)="removeAddedSkill(s)" class="remove-skill-btn">&times;</button>
+        </span>
+      }
     </div>
     <div class="popup-actions">
       <button (click)="onCancel()">Annulla</button>

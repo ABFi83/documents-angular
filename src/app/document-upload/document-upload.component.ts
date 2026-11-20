@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Output, NgZone } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Output, ChangeDetectionStrategy, signal } from '@angular/core';
+
 import { DocumentService } from './document.service';
 import { tap } from 'rxjs/operators';
 import { ProcesService } from './process.service';
@@ -9,18 +9,19 @@ import { Router } from '@angular/router';
   selector: 'app-document-upload',
   templateUrl: './document-upload.component.html',
   styleUrls: ['./document-upload.component.css'],
-  imports: [CommonModule]
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: []
 })
 export class DocumentUploadComponent {
   selectedFileName: string | null = null;
-  isUploading: boolean = false;
-  uploadSuccess: boolean = false;
-  errorMessage: string | null = null;
+  isUploading = signal(false);
+  uploadSuccess = signal(false);
+  errorMessage = signal<string | null>(null);
 
   @Output() uploadCompleted= new EventEmitter<void>();
 
 
-  constructor(private router: Router, private documentService: DocumentService, private procesService: ProcesService, private ngZone: NgZone) {
+  constructor(private router: Router, private documentService: DocumentService, private procesService: ProcesService) {
 
   }
 
@@ -67,8 +68,8 @@ export class DocumentUploadComponent {
 
       if (file) {
 
-        this.isUploading = true;
-        this.errorMessage = null; // Clear any previous error message
+        this.isUploading.set(true);
+        this.errorMessage.set(null); // Clear any previous error message
         this.documentService.uploadDocument(this.selectedFileName,"",file).pipe(
           tap({
             next: (response) => {
@@ -77,9 +78,9 @@ export class DocumentUploadComponent {
             },
             error: (error) => {
               console.error('Error uploading document:', error);
-              this.isUploading = false;
-              this.uploadSuccess = false;
-              this.errorMessage = 'Errore durante il caricamento del documento. Riprova.';
+              this.isUploading.set(false);
+              this.uploadSuccess.set(false);
+              this.errorMessage.set('Errore durante il caricamento del documento. Riprova.');
             }
           })
         ).forEach(() => {});
@@ -92,41 +93,27 @@ export class DocumentUploadComponent {
   }
 
   private initializePolling(id: number) {
-    const pollingInterval = 5000; // 5 seconds
-    let pollingHandle: any;
-
-    this.ngZone.runOutsideAngular(() => {
-      const poll = () => {
-        this.procesService.getProcess(id).subscribe({
-          next: (process: Process) => {
-            console.log('Polling status received:', process.status);
-            if (process.status === ProcessStatus.COMPLETED) {
-              this.ngZone.run(() => {
-                this.isUploading = false;
-                this.uploadSuccess = true;
-                clearInterval(pollingHandle);
-                this.uploadCompleted.emit();
-              });
-            }
-            if (process.status === ProcessStatus.ERROR) {
-              this.ngZone.run(() => {
-                this.isUploading = false;
-                this.uploadSuccess = false;
-                console.log('Upload error via polling');
-                this.errorMessage = process.error_message || 'Errore durante il caricamento del documento.';
-                clearInterval(pollingHandle);
-              });
-            }
-          },
-          error: (err: any) => {
-            this.ngZone.run(() => {
-              console.error('Polling error occurred:', err);
-              clearInterval(pollingHandle);
-            });
+    const pollingHandle = setInterval(() => {
+      this.procesService.getProcess(id).subscribe({
+        next: (process: Process) => {
+          if (process.status === ProcessStatus.COMPLETED) {
+            clearInterval(pollingHandle);
+            this.isUploading.set(false);
+            this.uploadSuccess.set(true);
+            this.uploadCompleted.emit();
           }
-        });
-      };
-      pollingHandle = setInterval(poll, pollingInterval);
-    });
+          if (process.status === ProcessStatus.ERROR) {
+            clearInterval(pollingHandle);
+            this.isUploading.set(false);
+            this.uploadSuccess.set(false);
+            this.errorMessage.set(process.error_message || "Errore durante il caricamento del documento.");
+          }
+        },
+        error: (err: any) => {
+          console.error("Polling error occurred:", err);
+          clearInterval(pollingHandle);
+        }
+      });
+    }, 5000);
   }
 }

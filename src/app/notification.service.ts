@@ -1,21 +1,15 @@
-import { Injectable } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { Injectable, inject } from '@angular/core';
+import { HotToastService } from '@ngxpert/hot-toast';
 
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
-  constructor(private toastr: ToastrService) {}
+  private toast = inject(HotToastService);
 
   showError(message: string): void {
-    this.toastr.error(message, 'Errore', {
-      positionClass: 'toast-bottom-right',
-      timeOut: 3000,
-    });
+    this.toast.error(message);
   }
 
   showSuccess(message: string): void {
-    this.toastr.success(message, 'Successo', {
-      positionClass: 'toast-bottom-right',
-      timeOut: 3000,
-    });
+    this.toast.success(message);
   }
 }
