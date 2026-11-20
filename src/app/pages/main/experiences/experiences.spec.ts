@@ -73,7 +73,9 @@ describe('Experiences', () => {
     const save = http.expectOne(req => req.method === 'POST' && req.url === url);
     expect(save.request.body).toEqual({ experience: added });
     save.flush({});
-    http.expectOne(req => req.method === 'GET' && req.url === url).flush([experience(4, 'New', '2024-01-01'), experience(1, 'Old', '2018-01-01')]);
+    http
+      .expectOne(req => req.method === 'GET' && req.url === url)
+      .flush([experience(4, 'New', '2024-01-01'), experience(1, 'Old', '2018-01-01')]);
     await fixture.whenStable();
 
     expect(companies()).toEqual(['New', 'Old']);

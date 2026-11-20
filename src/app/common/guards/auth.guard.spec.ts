@@ -4,8 +4,7 @@ import { SessionService } from '@common/services/session.service';
 import { authGuard } from './auth.guard';
 
 describe('authGuard', () => {
-  const run = () =>
-    TestBed.runInInjectionContext(() => authGuard({} as ActivatedRouteSnapshot, {} as RouterStateSnapshot));
+  const run = () => TestBed.runInInjectionContext(() => authGuard({} as ActivatedRouteSnapshot, {} as RouterStateSnapshot));
 
   beforeEach(() => {
     localStorage.clear();

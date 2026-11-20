@@ -8,6 +8,8 @@ export default defineConfig({
   reporter: 'html',
   use: {
     baseURL: 'http://localhost:4200',
+    // The UI picks Italian or English from the browser language: the suites assert the Italian copy.
+    locale: 'it-IT',
     trace: 'on-first-retry'
   },
   projects: [
