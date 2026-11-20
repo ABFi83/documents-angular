@@ -1,40 +1,54 @@
 @use 'functions' as fn;
 @use 'buttons' as *;
 
-/// Native modal `<dialog>` surface with a centered title and a cancel/confirm footer.
-@mixin dialog-surface($min-inline-size: fn.calc-unit(40)) {
-  min-inline-size: $min-inline-size;
-  max-inline-size: 90vw;
-  padding: fn.calc-unit(3.5) fn.calc-unit(4) fn.calc-unit(2.75);
+/// Native modal `<dialog>` surface: title on top, cancel (outlined) + confirm (solid) on the end side of the footer.
+@mixin dialog-surface($inline-size: fn.calc-unit(60)) {
+  inline-size: min(#{$inline-size}, calc(100vw - #{fn.calc-unit(4)}));
+  max-block-size: calc(100dvh - #{fn.calc-unit(4)});
+  padding: fn.calc-unit(4);
   border: none;
-  border-radius: fn.calc-unit(2);
-  box-shadow: 0 fn.calc-unit(0.5) fn.calc-unit(3) fn.color-mix-func(fn.get-color('primary'), transparent, 18%);
+  border-radius: fn.calc-unit(2.5);
+  box-shadow: fn.card-shadow(6, 20%);
+  color: inherit;
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+
+  @starting-style {
+    opacity: 0;
+    transform: translateY(fn.calc-unit(2));
+  }
 
   &::backdrop {
-    background: fn.color-mix-func(black, transparent, 25%);
+    background: fn.color-mix-func(fn.get-color('neutral', 900), transparent, 45%);
+    backdrop-filter: blur(fn.calc-unit(0.5));
   }
 
   &[open] {
     display: flex;
     flex-direction: column;
-    gap: fn.calc-unit(1.5);
+    gap: fn.calc-unit(2.5);
   }
 
   h2 {
-    margin-block-end: fn.calc-unit(1.25);
-    color: fn.get-color('primary', 700);
-    font-size: 1.17em;
-    text-align: center;
+    font-size: 1.25em;
+    font-weight: 700;
   }
 
   footer {
     display: flex;
-    justify-content: space-between;
-    gap: fn.calc-unit(1.25);
-    margin-block-start: fn.calc-unit(1.25);
+    justify-content: flex-end;
+    gap: fn.calc-unit(1.5);
+    margin-block-start: fn.calc-unit();
   }
 
   footer button {
-    @include primary-button(fn.calc-unit() fn.calc-unit(2.25));
+    @include primary-button;
+  }
+
+  footer button:first-child {
+    @include secondary-button;
   }
 }

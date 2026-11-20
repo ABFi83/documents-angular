@@ -12,9 +12,9 @@ test.describe('auth', () => {
     await mockUser(page, () => buildUser());
 
     await page.goto('/login');
-    await page.getByLabel('Username:').fill('mario@example.com');
-    await page.getByLabel('Password:').fill('Secret1!');
-    await page.getByRole('button', { name: 'Login' }).click();
+    await page.getByLabel('Username').fill('mario@example.com');
+    await page.getByLabel('Password').fill('Secret1!');
+    await page.getByRole('button', { name: 'Accedi' }).click();
 
     await expect(page).toHaveURL(/\/main$/);
     await expect(page.getByText('Carica il tuo CV')).toBeVisible();
@@ -24,7 +24,7 @@ test.describe('auth', () => {
     await page.route(`${API}/auth/login`, route => route.fulfill({ json: {} }));
 
     await page.goto('/login');
-    await page.getByRole('button', { name: 'Login' }).click();
+    await page.getByRole('button', { name: 'Accedi' }).click();
 
     await expect(page.getByRole('alert')).toHaveText('Credenziali non valide');
     await expect(page).toHaveURL(/\/login$/);

@@ -1,0 +1,126 @@
+@use 'functions' as fn;
+@use 'a11y' as *;
+@use 'buttons' as *;
+@use 'forms' as *;
+@use 'icons' as *;
+
+/// White surface with a hairline edge and a soft shadow (profile sections, auth form, upload).
+@mixin card {
+  border: 1px solid fn.get-color('neutral', 200);
+  border-radius: fn.calc-unit(2);
+  background: white;
+  box-shadow: fn.card-shadow(2, 6%);
+}
+
+/// App logo: a tinted tile with the document icon, followed by the app name.
+@mixin brand {
+  display: inline-flex;
+  align-items: center;
+  gap: fn.calc-unit(1.25);
+  color: fn.get-color('neutral', 900);
+  font-weight: 700;
+
+  i {
+    @include material-icon;
+
+    padding: fn.calc-unit(0.75);
+    border-radius: fn.calc-unit(1.25);
+    background: fn.get-color('primary', 700);
+    color: white;
+  }
+}
+
+/// Login/registration screen: a centered card with brand, title, subtitle, form, error and footer link.
+@mixin auth-screen {
+  main {
+    display: grid;
+    place-items: center;
+    min-block-size: 100dvh;
+    padding: fn.calc-unit(3) fn.calc-unit(2);
+    background: radial-gradient(circle at 50% 0%, fn.get-color('primary', 50), fn.get-color('neutral', 50) 70%);
+  }
+
+  section {
+    @include card;
+
+    display: flex;
+    flex-direction: column;
+    gap: fn.calc-unit(3);
+    inline-size: 100%;
+    max-inline-size: fn.calc-unit(55);
+    padding: fn.calc-unit(5) fn.calc-unit(4) fn.calc-unit(4);
+  }
+
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: fn.calc-unit();
+    text-align: center;
+  }
+
+  p[data-role='brand'] {
+    @include brand;
+
+    margin-block-end: fn.calc-unit(2);
+  }
+
+  h1 {
+    font-size: 1.625em;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  header p:last-child {
+    color: fn.get-color('neutral', 700);
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  label {
+    @include field-label;
+  }
+
+  input {
+    @include text-field;
+  }
+
+  input + label {
+    margin-block-start: fn.calc-unit(2.5);
+  }
+
+  form button {
+    @include primary-button;
+
+    margin-block-start: fn.calc-unit(4);
+  }
+
+  p[role='alert'] {
+    @include error-text;
+  }
+
+  p[data-role='switch'] {
+    padding-block-start: fn.calc-unit(3);
+    border-block-start: 1px solid fn.get-color('neutral', 200);
+    color: fn.get-color('neutral', 700);
+    text-align: center;
+  }
+
+  a {
+    border-radius: fn.calc-unit(0.5);
+    color: fn.get-color('primary', 800);
+    font-weight: 600;
+    text-underline-offset: fn.calc-unit(0.5);
+
+    &:hover {
+      color: fn.get-color('primary', 900);
+    }
+
+    &:focus-visible {
+      @include focus-ring;
+    }
+  }
+}

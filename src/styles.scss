@@ -1,6 +1,7 @@
 @use 'variables' as variables;
+@use 'functions' as fn;
 
-// Palette tokens (Material blue/red/green/grey converted to oklch). Components read them through
+// Palette tokens (Material blue/red/green converted to oklch, slate-tinted neutrals). Components read them through
 // `fn.get-color('<appearance>', <variant>)`, never directly.
 :root {
   --palette-primary-50: oklch(95.32% 0.0218 239.43deg);
@@ -16,14 +17,36 @@
   --palette-error-600: oklch(60.83% 0.209 27.03deg);
   --palette-error-700: oklch(56.8% 0.2002 26.41deg);
   --palette-error-900: oklch(50.16% 0.1887 27.48deg);
+  --palette-success-50: oklch(96.5% 0.03 150deg);
   --palette-success-800: oklch(52.34% 0.1347 144.17deg);
-  --palette-neutral-100: oklch(97.02% 0 none);
-  --palette-neutral-300: oklch(90.67% 0 none);
-  --palette-neutral-400: oklch(79.84% 0 none);
-  --palette-neutral-600: oklch(56.24% 0 none);
-  --palette-neutral-900: oklch(24.78% 0 none);
+  --palette-neutral-50: oklch(98.2% 0.004 248deg);
+  --palette-neutral-100: oklch(96.4% 0.006 248deg);
+  --palette-neutral-200: oklch(92.6% 0.009 252deg);
+  --palette-neutral-300: oklch(88% 0.012 255deg);
+  --palette-neutral-500: oklch(62% 0.02 257deg);
+  --palette-neutral-600: oklch(53% 0.022 257deg);
+  --palette-neutral-700: oklch(44.6% 0.026 257deg);
+  --palette-neutral-900: oklch(24.78% 0.02 262deg);
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
 }
 
 body {
+  min-block-size: 100dvh;
+  margin: 0;
+  background: fn.get-color('neutral', 50);
+  color: fn.get-color('neutral', 900);
   font-family: variables.$font-base;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
 }

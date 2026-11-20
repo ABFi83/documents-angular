@@ -1,68 +1,121 @@
 @use 'functions' as fn;
 @use 'a11y' as *;
+@use 'icons' as *;
 
-/// Solid primary action (login, registration, dialog actions).
-@mixin primary-button($padding: fn.calc-unit(1.25)) {
-  padding: $padding;
-  border: none;
-  border-radius: fn.calc-unit(0.75);
-  background: fn.get-color('primary', 700);
-  color: white;
-  font-size: 1em;
-  font-weight: bold;
+/// Shape shared by the text buttons: icon and label centered with a gap.
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: fn.calc-unit();
+  padding: fn.calc-unit(1.25) fn.calc-unit(2.5);
+  border: 1px solid transparent;
+  border-radius: fn.calc-unit(1.25);
+  font: inherit;
+  font-weight: 600;
+  line-height: 1.25;
+  white-space: nowrap;
   cursor: pointer;
-  transition: background 0.2s;
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    color 0.2s,
+    box-shadow 0.2s;
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  i {
+    @include material-icon;
+  }
+}
+
+/// Solid primary action (login, registration, dialog confirm, upload).
+@mixin primary-button {
+  @include button-base;
+
+  background: fn.get-color('primary', 700);
+  box-shadow: 0 1px fn.calc-unit(0.25) fn.color-mix-func(fn.get-color('primary', 900), transparent, 30%);
+  color: white;
 
   &:hover {
     background: fn.get-color('primary', 800);
   }
 
-  &:focus-visible {
-    @include focus-ring;
-  }
-
   &:disabled {
-    background: fn.get-color('neutral', 600);
+    background: fn.get-color('neutral', 300);
+    box-shadow: none;
+    color: fn.get-color('neutral', 700);
     cursor: not-allowed;
   }
 }
 
-/// Borderless icon-only button (list actions, menu toggle).
-@mixin icon-button($size: 1.5em) {
-  display: flex;
-  align-items: center;
-  padding: 0;
-  border: none;
-  background: none;
-  color: fn.get-color('primary', 700);
-  font-size: $size;
-  cursor: pointer;
+/// Outlined neutral action (dialog cancel, removing the chosen file).
+@mixin secondary-button {
+  @include button-base;
+
+  border-color: fn.get-color('neutral', 500);
+  background: white;
+  color: fn.get-color('neutral', 900);
 
   &:hover {
-    color: fn.get-color('primary', 900);
-  }
-
-  &:focus-visible {
-    @include focus-ring;
+    background: fn.get-color('neutral', 100);
   }
 }
 
-/// Text button in the error hue (menu reset, removing a chip).
-@mixin danger-text-button {
+/// Round icon-only button (list actions, menu toggle, closing a notification).
+@mixin icon-button($size: fn.calc-unit(5)) {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  inline-size: $size;
+  block-size: $size;
+  padding: 0;
   border: none;
+  border-radius: 50%;
   background: none;
-  color: fn.get-color('error', 700);
+  color: fn.get-color('neutral', 700);
   cursor: pointer;
   transition:
     background 0.2s,
     color 0.2s;
 
   &:hover {
-    background: fn.get-color('error', 50);
-    color: fn.get-color('error', 900);
+    background: fn.get-color('primary', 50);
+    color: fn.get-color('primary', 900);
   }
 
   &:focus-visible {
     @include focus-ring;
+  }
+
+  i {
+    @include material-icon;
+  }
+}
+
+/// Icon button that removes something: it turns red on hover.
+@mixin danger-icon-button($size: fn.calc-unit(5)) {
+  @include icon-button($size);
+
+  &:hover {
+    background: fn.get-color('error', 50);
+    color: fn.get-color('error', 900);
+  }
+}
+
+/// Full-width text button in the error hue (menu reset).
+@mixin danger-text-button {
+  @include button-base;
+
+  justify-content: flex-start;
+  background: none;
+  color: fn.get-color('error', 700);
+
+  &:hover {
+    background: fn.get-color('error', 50);
+    color: fn.get-color('error', 900);
   }
 }

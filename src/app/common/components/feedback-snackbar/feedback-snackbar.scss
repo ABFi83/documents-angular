@@ -3,48 +3,58 @@
 
 ul {
   position: fixed;
-  inset-block-end: fn.calc-unit(2.5);
-  inset-inline-end: fn.calc-unit(2.5);
+  inset-block-end: fn.calc-unit(3);
+  inset-inline-end: fn.calc-unit(3);
   z-index: 9999;
   display: flex;
   flex-direction: column;
   gap: fn.calc-unit();
+  max-inline-size: calc(100vw - #{fn.calc-unit(6)});
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 li {
+  @include mix.card;
+
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: fn.calc-unit(1.5);
-  min-inline-size: fn.calc-unit(31.625);
-  max-inline-size: fn.calc-unit(50.25);
-  padding: fn.calc-unit(1.5) fn.calc-unit(2);
-  border: 1px solid fn.color-mix-func(fn.get-color('error', 600), transparent, 60%);
-  border-radius: fn.calc-unit();
-  background: fn.get-color('error', 50);
-  box-shadow: fn.card-shadow();
-  color: fn.get-color('error', 900);
+  inline-size: fn.calc-unit(48);
+  max-inline-size: 100%;
+  padding: fn.calc-unit(1.5) fn.calc-unit(1.5) fn.calc-unit(1.5) fn.calc-unit(2);
+  border-inline-start: fn.calc-unit(0.5) solid fn.get-color('error', 700);
+  box-shadow: fn.card-shadow(4, 14%);
+  animation: slide-in 0.25s ease-out;
+}
+
+li > i {
+  @include mix.material-icon(1.5em);
+
+  color: fn.get-color('error', 700);
 }
 
 p {
   display: flex;
   flex: 1;
   flex-direction: column;
-  margin: 0;
+  color: fn.get-color('neutral', 700);
+  font-size: 0.875em;
 }
 
 strong {
-  font-size: 1.1em;
+  color: fn.get-color('neutral', 900);
+  font-size: 1.125em;
 }
 
 button {
-  @include mix.icon-button(1em);
-
-  color: fn.get-color('error', 900);
+  @include mix.icon-button(fn.calc-unit(4));
 }
 
-i {
-  @include mix.material-icon;
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(fn.calc-unit(2));
+  }
 }

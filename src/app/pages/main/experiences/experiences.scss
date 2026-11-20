@@ -2,38 +2,83 @@
 @use 'mixins' as mix;
 
 :host {
-  display: block;
+  @include mix.profile-section;
 }
 
-header {
-  @include mix.section-header;
+li {
+  display: flex;
+  align-items: center;
+  gap: fn.calc-unit();
+  padding-block: fn.calc-unit(0.75);
+  border-block-end: 1px solid fn.get-color('neutral', 200);
+
+  &:last-child {
+    border-block-end: none;
+  }
 }
 
-ul {
-  @include mix.bordered-list;
+// The row itself opens the experience read-only.
+button[data-role='view'] {
+  display: grid;
+  flex: 1;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: fn.calc-unit(1.5);
+  align-items: center;
+  min-inline-size: 0;
+  padding: fn.calc-unit();
+  border: none;
+  border-radius: fn.calc-unit(1.25);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: fn.get-color('neutral', 100);
+  }
+
+  &:focus-visible {
+    @include mix.focus-ring;
+  }
+
+  i {
+    @include mix.material-icon;
+
+    grid-row: span 2;
+    padding: fn.calc-unit(1.25);
+    border-radius: fn.calc-unit(1.25);
+    background: fn.get-color('primary', 50);
+    color: fn.get-color('primary', 800);
+  }
+
+  strong,
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  strong {
+    font-weight: 600;
+  }
+
+  span {
+    color: fn.get-color('neutral', 700);
+    font-size: 0.875em;
+  }
 }
 
 li > div {
   display: flex;
-  gap: fn.calc-unit(0.5);
+  gap: fn.calc-unit(0.25);
 }
 
-button {
+li > div button {
   @include mix.icon-button;
 }
 
-// The row itself opens the experience read-only: it keeps the look of plain list text.
-button[data-role='view'] {
-  flex: 1;
-  color: inherit;
-  font: inherit;
-  text-align: start;
-}
-
-button[data-role='add'] {
-  font-size: 2em;
-}
-
-i {
-  @include mix.material-icon;
+li > div button[data-role='delete'] {
+  @include mix.danger-icon-button;
 }

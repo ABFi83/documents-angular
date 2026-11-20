@@ -9,7 +9,8 @@ import { Skills } from './skills/skills';
 @Component({
   selector: 'app-main',
   imports: [DocumentUpload, Experiences, MainHeader, Skills],
-  templateUrl: './main.html'
+  templateUrl: './main.html',
+  styleUrl: './main.scss'
 })
 export class Main {
   #userApi = inject(UserApiService);

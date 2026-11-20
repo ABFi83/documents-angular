@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "APP_NAME": "Documents",
     "CANCEL": "Cancel",
     "CLOSE": "Close",
     "CONFIRM": "Confirm",
@@ -15,16 +16,16 @@
     "ADD": "Add experience",
     "DELETE": "Delete experience",
     "DIALOG": {
-      "COMPANY": "Company:",
-      "COMPANY_PLACEHOLDER": "Company",
+      "COMPANY": "Company",
+      "COMPANY_PLACEHOLDER": "E.g. ACME Inc.",
       "CURRENT_POSITION": "Current position",
-      "DESCRIPTION": "Description:",
+      "DESCRIPTION": "Description",
       "DESCRIPTION_PLACEHOLDER": "Experience description",
-      "END_DATE": "End date:",
-      "ROLE": "Role:",
-      "ROLE_PLACEHOLDER": "Role",
-      "START_DATE": "Start date:",
-      "TITLE": "Experiences"
+      "END_DATE": "End date",
+      "ROLE": "Role",
+      "ROLE_PLACEHOLDER": "E.g. Frontend Developer",
+      "START_DATE": "Start date",
+      "TITLE": "Experience"
     },
     "EDIT": "Edit experience",
     "TITLE": "Experiences",
@@ -35,11 +36,13 @@
       "GENERIC": "Login error",
       "INVALID_CREDENTIALS": "Invalid credentials"
     },
-    "PASSWORD": "Password:",
+    "NO_ACCOUNT": "No account yet?",
+    "PASSWORD": "Password",
     "REGISTER": "Sign up",
-    "SUBMIT": "Login",
-    "TITLE": "Document",
-    "USERNAME": "Username:"
+    "SUBMIT": "Sign in",
+    "SUBTITLE": "Sign in to manage your profile",
+    "TITLE": "Welcome back",
+    "USERNAME": "Username"
   },
   "MAIN": {
     "HEADER": {
@@ -52,9 +55,9 @@
     }
   },
   "REGISTRATION": {
-    "CONFIRM_EMAIL": "Confirm email:",
-    "CONFIRM_PASSWORD": "Confirm password:",
-    "EMAIL": "Email:",
+    "CONFIRM_EMAIL": "Confirm email",
+    "CONFIRM_PASSWORD": "Confirm password",
+    "EMAIL": "Email",
     "ERRORS": {
       "EMAIL_MISMATCH": "The emails do not match.",
       "EMAIL_TAKEN": "Email already registered.",
@@ -63,16 +66,17 @@
       "PASSWORD_MISMATCH": "The passwords do not match.",
       "WEAK_PASSWORD": "The password must have at least 8 characters, one letter, one number and one special character."
     },
-    "PASSWORD": "Password:",
+    "PASSWORD": "Password",
     "SUBMIT": "Sign up",
-    "TITLE": "Sign up"
+    "SUBTITLE": "Sign up to upload your CV",
+    "TITLE": "Create your account"
   },
   "SKILLS": {
     "ADD": "Add skill",
     "DIALOG": {
-      "PLACEHOLDER": "Skill",
+      "PLACEHOLDER": "Search or add a skill",
       "REMOVE": "Remove {{name}}",
-      "TITLE": "SKILLS"
+      "TITLE": "Edit skills"
     },
     "REMOVE": "Remove skill",
     "TITLE": "Skills"
@@ -85,8 +89,11 @@
       "PROCESS_FAILED": "Error while uploading the document.",
       "UPLOAD_FAILED": "Error while uploading the document. Please try again."
     },
+    "HINT": "Drop the file here or click to choose it · PDF only",
+    "INTRO": "Upload your resume as a PDF: we will extract your skills and experiences.",
     "PROCEED": "Continue",
     "PROGRESS": "Uploading",
-    "SUCCESS": "Upload completed successfully!"
+    "SUCCESS": "Upload completed successfully!",
+    "TITLE": "Let us start from your CV"
   }
 }

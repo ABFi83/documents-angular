@@ -2,21 +2,44 @@
 @use 'mixins' as mix;
 
 :host {
-  display: block;
+  @include mix.card;
+
+  display: flex;
+  flex-direction: column;
+  gap: fn.calc-unit(3);
+  inline-size: 100%;
+  max-inline-size: fn.calc-unit(85);
+  margin-inline: auto;
+  padding: fn.calc-unit(4);
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  gap: fn.calc-unit(0.75);
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.5em;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+header p {
+  color: fn.get-color('neutral', 700);
 }
 
 section {
-  position: relative;
-  inline-size: 50%;
-  margin: 0 auto;
-  padding: fn.calc-unit(2.5);
-  border: fn.calc-unit(0.25) dashed fn.get-color('primary', 200);
-  border-radius: fn.calc-unit(1.25);
-  background: fn.soft-tint('primary');
-  text-align: center;
-  transition: background-color 0.3s ease;
+  border: 1px dashed fn.get-color('neutral', 500);
+  border-radius: fn.calc-unit(2);
+  background: fn.get-color('neutral', 50);
+  transition:
+    background 0.2s,
+    border-color 0.2s;
 
   &:hover {
+    border-color: fn.get-color('primary', 700);
     background: fn.get-color('primary', 50);
   }
 }
@@ -26,10 +49,13 @@ input {
 }
 
 label {
-  display: inline-block;
-  margin-block-start: fn.calc-unit(1.25);
-  font-size: 1.2em;
-  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: fn.calc-unit();
+  padding: fn.calc-unit(5) fn.calc-unit(3);
+  border-radius: fn.calc-unit(2);
+  text-align: center;
   cursor: pointer;
 }
 
@@ -37,70 +63,85 @@ input:focus-visible + label {
   @include mix.focus-ring;
 }
 
-button[data-role='clear'] {
-  @include mix.danger-text-button;
+label i {
+  @include mix.material-icon(2em);
 
-  position: fixed;
-  inset-block-end: fn.calc-unit(1.25);
-  inset-inline-end: fn.calc-unit(1.25);
-  font-size: 1.5em;
+  margin-block-end: fn.calc-unit();
+  padding: fn.calc-unit(1.5);
+  border-radius: 50%;
+  background: fn.get-color('primary', 100);
+  color: fn.get-color('primary', 900);
+}
+
+label strong {
+  font-size: 1.125em;
+  overflow-wrap: anywhere;
+}
+
+label span {
+  color: fn.get-color('neutral', 700);
+  font-size: 0.875em;
+}
+
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: fn.calc-unit(1.5);
+}
+
+button[data-role='clear'] {
+  @include mix.secondary-button;
 }
 
 button[data-role='proceed'] {
-  display: block;
-  margin: fn.calc-unit(2.5) auto 0;
-  padding: fn.calc-unit(1.25) fn.calc-unit(2.5);
-  border: none;
-  border-radius: fn.calc-unit(0.625);
-  background: fn.get-color('primary', 200);
-  color: black;
-  font-size: 1em;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  @include mix.primary-button;
+}
 
-  &:hover {
-    background: fn.get-color('primary', 300);
+p[role='alert'] {
+  @include mix.error-text;
+}
+
+p[data-role='success'] {
+  @include mix.error-text;
+
+  border-color: fn.color-mix-func(fn.get-color('success', 800), transparent, 40%);
+  background: fn.get-color('success', 50);
+  color: fn.get-color('success', 800);
+}
+
+@container (inline-size < #{fn.calc-unit(60)}) {
+  :host {
+    padding: fn.calc-unit(3) fn.calc-unit(2.5);
   }
 
-  &:focus-visible {
-    @include mix.focus-ring;
+  footer button {
+    flex: 1;
   }
 }
 
+// Indeterminate bar: the BE does not report progress.
 [role='progressbar'] {
-  inline-size: 50%;
-  block-size: fn.calc-unit(2.5);
-  margin: fn.calc-unit(2.5) auto 0;
+  block-size: fn.calc-unit(0.75);
   overflow: hidden;
-  border-radius: fn.calc-unit(0.625);
-  background: fn.get-color('neutral', 100);
+  border-radius: fn.calc-unit(0.75);
+  background: fn.get-color('primary', 50);
 
   > div {
-    inline-size: 0%;
+    inline-size: 40%;
     block-size: 100%;
-    background: fn.get-color('primary', 200);
-    animation: progress 10s linear infinite;
+    border-radius: inherit;
+    background: fn.get-color('primary', 700);
+    animation: progress 1.4s ease-in-out infinite;
   }
 }
 
 @keyframes progress {
   from {
-    inline-size: 0%;
+    transform: translateX(-100%);
   }
 
   to {
-    inline-size: 100%;
+    transform: translateX(250%);
   }
-}
-
-p {
-  @include mix.error-text;
-
-  font-size: 0.9em;
-}
-
-p[data-role='success'] {
-  margin-block-start: fn.calc-unit(2.5);
-  color: fn.get-color('success', 800);
-  font-size: 1em;
 }

@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "APP_NAME": "Documents",
     "CANCEL": "Annulla",
     "CLOSE": "Chiudi",
     "CONFIRM": "Conferma",
@@ -15,19 +16,19 @@
     "ADD": "Aggiungi esperienza",
     "DELETE": "Elimina esperienza",
     "DIALOG": {
-      "COMPANY": "Company:",
-      "COMPANY_PLACEHOLDER": "Company",
+      "COMPANY": "Azienda",
+      "COMPANY_PLACEHOLDER": "Es. ACME S.p.A.",
       "CURRENT_POSITION": "Posizione attuale",
-      "DESCRIPTION": "Descrizione:",
+      "DESCRIPTION": "Descrizione",
       "DESCRIPTION_PLACEHOLDER": "Descrizione esperienza",
-      "END_DATE": "Data fine:",
-      "ROLE": "Role:",
-      "ROLE_PLACEHOLDER": "Role",
-      "START_DATE": "Data inizio:",
-      "TITLE": "Experiences"
+      "END_DATE": "Data fine",
+      "ROLE": "Ruolo",
+      "ROLE_PLACEHOLDER": "Es. Frontend Developer",
+      "START_DATE": "Data inizio",
+      "TITLE": "Esperienza"
     },
     "EDIT": "Modifica esperienza",
-    "TITLE": "Experiences",
+    "TITLE": "Esperienze",
     "VIEW": "Visualizza esperienza"
   },
   "LOGIN": {
@@ -35,11 +36,13 @@
       "GENERIC": "Errore di login",
       "INVALID_CREDENTIALS": "Credenziali non valide"
     },
-    "PASSWORD": "Password:",
+    "NO_ACCOUNT": "Non hai un account?",
+    "PASSWORD": "Password",
     "REGISTER": "Registrati",
-    "SUBMIT": "Login",
-    "TITLE": "Document",
-    "USERNAME": "Username:"
+    "SUBMIT": "Accedi",
+    "SUBTITLE": "Accedi per gestire il tuo profilo",
+    "TITLE": "Bentornato",
+    "USERNAME": "Username"
   },
   "MAIN": {
     "HEADER": {
@@ -47,14 +50,14 @@
       "MENU": "Menu",
       "RESET": "Reset",
       "RESET_ERROR": "Errore durante il reset",
-      "TITLE": "Profile",
+      "TITLE": "Profilo",
       "WELCOME": "Benvenuto"
     }
   },
   "REGISTRATION": {
-    "CONFIRM_EMAIL": "Conferma Email:",
-    "CONFIRM_PASSWORD": "Conferma Password:",
-    "EMAIL": "Email:",
+    "CONFIRM_EMAIL": "Conferma email",
+    "CONFIRM_PASSWORD": "Conferma password",
+    "EMAIL": "Email",
     "ERRORS": {
       "EMAIL_MISMATCH": "Le email non coincidono.",
       "EMAIL_TAKEN": "Email già registrata.",
@@ -63,16 +66,17 @@
       "PASSWORD_MISMATCH": "Le password non coincidono.",
       "WEAK_PASSWORD": "La password deve avere almeno 8 caratteri, una lettera, un numero e un carattere speciale."
     },
-    "PASSWORD": "Password:",
+    "PASSWORD": "Password",
     "SUBMIT": "Registrati",
-    "TITLE": "Registrazione"
+    "SUBTITLE": "Registrati per caricare il tuo CV",
+    "TITLE": "Crea il tuo account"
   },
   "SKILLS": {
     "ADD": "Aggiungi skill",
     "DIALOG": {
-      "PLACEHOLDER": "Skill",
+      "PLACEHOLDER": "Cerca o aggiungi una skill",
       "REMOVE": "Rimuovi {{name}}",
-      "TITLE": "SKILLS"
+      "TITLE": "Modifica skill"
     },
     "REMOVE": "Rimuovi skill",
     "TITLE": "Skills"
@@ -85,8 +89,11 @@
       "PROCESS_FAILED": "Errore durante il caricamento del documento.",
       "UPLOAD_FAILED": "Errore durante il caricamento del documento. Riprova."
     },
+    "HINT": "Trascina qui il file o clicca per sceglierlo · solo PDF",
+    "INTRO": "Carica il curriculum in PDF: ne estrarremo competenze ed esperienze.",
     "PROCEED": "Procedi",
     "PROGRESS": "Caricamento in corso",
-    "SUCCESS": "Caricamento completato con successo!"
+    "SUCCESS": "Caricamento completato con successo!",
+    "TITLE": "Iniziamo dal tuo CV"
   }
 }

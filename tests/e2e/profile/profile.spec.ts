@@ -12,7 +12,7 @@ test.describe('profile', () => {
 
     await expect(page.getByRole('listitem').filter({ hasText: 'Angular' })).toBeVisible();
     await expect(page.getByRole('listitem').filter({ hasText: 'TypeScript' })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'ACME - Developer' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'ACME Developer' })).toBeVisible();
   });
 
   test('removes a skill', async ({ page }) => {

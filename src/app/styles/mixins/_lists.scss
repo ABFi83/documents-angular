@@ -1,37 +1,72 @@
 @use 'functions' as fn;
+@use 'buttons' as *;
+@use 'layout' as *;
 
-/// Title row of a profile section: heading on the start side, add button on the end side.
-@mixin section-header {
+/// A profile section (skills, experiences): a card with a title row and a tinted add button on the end side.
+@mixin profile-section {
+  @include card;
+
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-block-start: fn.calc-unit(1.25);
-  padding-inline: fn.calc-unit(2.25);
+  flex-direction: column;
+  gap: fn.calc-unit(2);
+  padding: fn.calc-unit(3);
 
-  h2 {
-    font-size: 2em;
-  }
-}
-
-/// Bordered list of profile rows with an action area on the end side.
-@mixin bordered-list {
-  position: relative;
-  margin: 0;
-  padding: 0 0 fn.calc-unit(1.25);
-  border: fn.calc-unit(0.25) solid fn.get-color('primary', 200);
-  border-radius: fn.calc-unit(2);
-  background: fn.soft-tint('primary');
-  list-style: none;
-
-  li {
+  header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: fn.calc-unit(1.25) fn.calc-unit(2.25);
-    border-block-end: 1px solid fn.get-color('primary', 50);
+    gap: fn.calc-unit(2);
   }
 
-  li:last-child {
-    border-block-end: none;
+  h2 {
+    font-size: 1.25em;
+    font-weight: 700;
+  }
+
+  button[data-role='add'] {
+    @include icon-button;
+
+    background: fn.get-color('primary', 50);
+    color: fn.get-color('primary', 800);
+
+    &:hover {
+      background: fn.get-color('primary', 100);
+    }
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}
+
+/// Wrapping list of pill chips, each with a small remove button (skills list and skill dialog).
+@mixin chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: fn.calc-unit();
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: fn.calc-unit(0.25);
+    padding-block: fn.calc-unit(0.5);
+    padding-inline: fn.calc-unit(1.75) fn.calc-unit(0.5);
+    border: 1px solid fn.get-color('primary', 100);
+    border-radius: fn.calc-unit(5);
+    background: fn.get-color('primary', 50);
+    color: fn.get-color('primary', 900);
+    font-size: 0.875em;
+    font-weight: 500;
+  }
+
+  li button {
+    @include danger-icon-button(fn.calc-unit(3.5));
+
+    color: fn.get-color('primary', 900);
   }
 }

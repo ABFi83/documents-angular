@@ -34,7 +34,7 @@ test.describe('document upload', () => {
     await page.getByLabel('Carica il tuo CV').setInputFiles(pdf);
     await page.getByRole('button', { name: 'Procedi' }).click();
 
-    await expect(page.getByRole('button', { name: 'ACME - Developer' })).toBeVisible(POLLING_TIMEOUT);
+    await expect(page.getByRole('button', { name: 'ACME Developer' })).toBeVisible(POLLING_TIMEOUT);
   });
 
   test('shows the BE error when the processing fails', async ({ page }) => {

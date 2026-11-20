@@ -2,36 +2,59 @@
 
 /// Text-like input (text, password, email, date, textarea).
 @mixin text-field {
-  padding: fn.calc-unit() fn.calc-unit(1.25);
-  border: 1px solid fn.get-color('primary', 200);
-  border-radius: fn.calc-unit(0.75);
+  inline-size: 100%;
+  padding: fn.calc-unit(1.25) fn.calc-unit(1.5);
+  border: 1px solid fn.get-color('neutral', 500);
+  border-radius: fn.calc-unit(1.25);
+  background: white;
+  color: inherit;
   font: inherit;
   outline: none;
-  transition: border-color 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+
+  &::placeholder {
+    color: fn.get-color('neutral', 600);
+  }
+
+  &:hover {
+    border-color: fn.get-color('neutral', 700);
+  }
 
   &:focus-visible {
     border-color: fn.get-color('primary', 700);
-    box-shadow: 0 0 0 1px fn.get-color('primary', 700);
+    box-shadow: 0 0 0 fn.calc-unit(0.375) fn.color-mix-func(fn.get-color('primary', 500), transparent, 30%);
   }
 
   &:disabled {
+    border-color: fn.get-color('neutral', 300);
     background: fn.get-color('neutral', 100);
+    color: fn.get-color('neutral', 700);
   }
 
   &[data-error='true'] {
-    border: fn.calc-unit(0.25) solid fn.get-color('error', 700);
+    border-color: fn.get-color('error', 700);
+    box-shadow: 0 0 0 1px fn.get-color('error', 700);
   }
 }
 
-/// Field label in the primary hue.
+/// Field label above its input.
 @mixin field-label {
-  font-weight: 500;
-  color: fn.get-color('primary', 700);
+  display: block;
+  margin-block-end: fn.calc-unit(0.75);
+  color: fn.get-color('neutral', 900);
+  font-size: 0.875em;
+  font-weight: 600;
 }
 
-/// Inline error/validation message.
+/// Error/validation message: a red tinted banner with a matching border.
 @mixin error-text {
-  margin-block: fn.calc-unit(1.25) 0;
-  color: fn.get-color('error', 700);
-  text-align: center;
+  padding: fn.calc-unit(1.25) fn.calc-unit(1.5);
+  border: 1px solid fn.color-mix-func(fn.get-color('error', 600), transparent, 40%);
+  border-radius: fn.calc-unit(1.25);
+  background: fn.get-color('error', 50);
+  color: fn.get-color('error', 900);
+  font-size: 0.875em;
+  font-weight: 500;
 }

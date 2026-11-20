@@ -17,7 +17,9 @@
     @for (skill of added(); track skill.name) {
       <li>
         {{ skill.name }}
-        <button type="button" [attr.aria-label]="'SKILLS.DIALOG.REMOVE' | translate: { name: skill.name }" (click)="remove(skill)">&times;</button>
+        <button type="button" [attr.aria-label]="'SKILLS.DIALOG.REMOVE' | translate: { name: skill.name }" (click)="remove(skill)">
+          <i aria-hidden="true">close</i>
+        </button>
       </li>
     }
   </ul>

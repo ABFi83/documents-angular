@@ -1,62 +1,110 @@
 @use 'functions' as fn;
 @use 'mixins' as mix;
 
+:host {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 10;
+  display: block;
+  border-block-end: 1px solid fn.get-color('neutral', 200);
+  background: fn.color-mix-func(white, transparent, 85%);
+  backdrop-filter: blur(fn.calc-unit());
+}
+
 header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: fn.calc-unit(2);
+  max-inline-size: fn.calc-unit(140);
+  margin-inline: auto;
+  padding: fn.calc-unit(1.5) fn.calc-unit(3);
+}
+
+p[data-role='brand'] {
+  @include mix.brand;
+}
+
+h1 {
+  flex: 1;
+  padding-inline-start: fn.calc-unit(2);
+  border-inline-start: 1px solid fn.get-color('neutral', 300);
+  color: fn.get-color('neutral', 700);
+  font-size: 1em;
+  font-weight: 500;
 }
 
 button[popovertarget] {
-  @include mix.icon-button(2.2em);
+  @include mix.button-base;
 
-  justify-content: center;
-  padding: fn.calc-unit(0.5) fn.calc-unit();
-  border-radius: 50%;
-  transition:
-    background 0.2s,
-    color 0.2s;
+  padding: fn.calc-unit(0.75) fn.calc-unit(1.25);
+  border-color: fn.get-color('neutral', 200);
+  background: white;
+  margin-inline-start: auto;
+  color: fn.get-color('neutral', 900);
   anchor-name: --main-menu-toggle;
 
   &:hover {
-    background: fn.get-color('primary', 50);
+    background: fn.get-color('neutral', 100);
   }
-}
 
-i {
-  @include mix.material-icon(inherit);
+  i:first-child {
+    color: fn.get-color('primary', 700);
+    font-size: 1.5em;
+  }
 }
 
 // The menu opens under the toggle (anchor positioning); light dismiss closes it on an outside click.
 [popover] {
+  @include mix.card;
+
   position-anchor: --main-menu-toggle;
   position-area: block-end span-inline-start;
-  min-inline-size: fn.calc-unit(22.5);
+  flex-direction: column;
+  min-inline-size: fn.calc-unit(30);
   margin: 0;
-  padding: fn.calc-unit(2.25) fn.calc-unit(2.25) fn.calc-unit(1.5);
-  border: none;
-  border-radius: fn.calc-unit(1.25);
-  box-shadow: fn.card-shadow(1, 8%);
+  margin-block-start: fn.calc-unit();
+  padding: fn.calc-unit(1.5);
+  box-shadow: fn.card-shadow(4, 14%);
+
+  &:popover-open {
+    display: flex;
+  }
 }
 
-p {
-  inline-size: 100%;
-  margin: 0 0 fn.calc-unit(0.75);
-  text-align: center;
+[popover] p {
+  padding-inline: fn.calc-unit(1.5);
+  color: fn.get-color('neutral', 700);
+  font-size: 0.875em;
 }
 
-p[data-role='user-name'] {
-  font-size: 1.1em;
-  font-weight: bold;
-}
-
-[popover] button {
-  @include mix.danger-text-button;
-
-  inline-size: 100%;
-  margin-block-end: fn.calc-unit(1.25);
-  padding: fn.calc-unit(0.75) fn.calc-unit(1.75);
-  border-radius: fn.calc-unit();
+[popover] p[data-role='user-name'] {
+  margin-block-end: fn.calc-unit(1.5);
+  padding-block-end: fn.calc-unit(1.5);
+  border-block-end: 1px solid fn.get-color('neutral', 200);
+  color: fn.get-color('neutral', 900);
   font-size: 1em;
-  font-weight: bold;
+  font-weight: 600;
+}
+
+button[data-role='reset'] {
+  @include mix.danger-text-button;
+}
+
+button[data-role='logout'] {
+  @include mix.button-base;
+
+  justify-content: flex-start;
+  background: none;
+  color: fn.get-color('neutral', 900);
+
+  &:hover {
+    background: fn.get-color('neutral', 100);
+  }
+}
+
+@container (inline-size < #{fn.calc-unit(60)}) {
+  h1,
+  button[popovertarget] span {
+    display: none;
+  }
 }

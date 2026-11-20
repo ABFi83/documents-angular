@@ -1,0 +1,31 @@
+@use 'functions' as fn;
+
+:host {
+  display: block;
+  container-type: inline-size;
+}
+
+main {
+  display: grid;
+  align-items: start;
+  gap: fn.calc-unit(3);
+  max-inline-size: fn.calc-unit(140);
+  margin-inline: auto;
+  padding: fn.calc-unit(4) fn.calc-unit(3);
+}
+
+@container (inline-size < #{fn.calc-unit(60)}) {
+  main {
+    padding: fn.calc-unit(2.5) fn.calc-unit(2);
+  }
+}
+
+@container (inline-size > #{fn.calc-unit(112)}) {
+  main {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  }
+
+  app-document-upload {
+    grid-column: 1 / -1;
+  }
+}

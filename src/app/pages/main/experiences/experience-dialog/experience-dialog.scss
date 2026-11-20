@@ -2,54 +2,45 @@
 @use 'mixins' as mix;
 
 dialog {
-  @include mix.dialog-surface(fn.calc-unit(52.5));
+  @include mix.dialog-surface(fn.calc-unit(70));
 }
 
 form {
   display: flex;
   flex-direction: column;
-  gap: fn.calc-unit(1.5);
 }
 
 label {
   @include mix.field-label;
-
-  display: block;
-  margin-block-end: fn.calc-unit(0.5);
 }
 
 input:not([type='checkbox']),
 textarea {
   @include mix.text-field;
+}
 
-  box-sizing: border-box;
-  inline-size: 100%;
-  margin-block-end: fn.calc-unit();
+input + label,
+textarea + label,
+div[data-role='dates'] {
+  margin-block-start: fn.calc-unit(2.5);
 }
 
 textarea {
-  block-size: fn.calc-unit(25);
+  min-block-size: fn.calc-unit(15);
+  resize: vertical;
 }
 
 div[data-role='dates'] {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(fn.calc-unit(25), 1fr));
   gap: fn.calc-unit(2.5);
-  justify-content: space-between;
-
-  > div {
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-    align-items: flex-start;
-  }
 }
 
 div[data-role='current'] {
   display: flex;
-  gap: fn.calc-unit();
   align-items: center;
-  inline-size: 100%;
-  margin-block-start: fn.calc-unit(0.5);
+  gap: fn.calc-unit();
+  margin-block-start: fn.calc-unit(1.25);
 
   label {
     margin: 0;
@@ -58,7 +49,13 @@ div[data-role='current'] {
   }
 
   input {
+    inline-size: fn.calc-unit(2.25);
+    block-size: fn.calc-unit(2.25);
     margin: 0;
     accent-color: fn.get-color('primary', 700);
   }
+}
+
+form footer {
+  margin-block-start: fn.calc-unit(3);
 }

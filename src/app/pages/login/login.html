@@ -1,17 +1,27 @@
 <main>
-  <h1>{{ 'LOGIN.TITLE' | translate }}</h1>
-  <form [formRoot]="credentials">
-    <label for="username">{{ 'LOGIN.USERNAME' | translate }}</label>
-    <input id="username" type="text" autocomplete="username" [formField]="credentials.username" />
+  <section>
+    <header>
+      <p data-role="brand"><i aria-hidden="true">description</i>{{ 'COMMON.APP_NAME' | translate }}</p>
+      <h1>{{ 'LOGIN.TITLE' | translate }}</h1>
+      <p>{{ 'LOGIN.SUBTITLE' | translate }}</p>
+    </header>
 
-    <label for="password">{{ 'LOGIN.PASSWORD' | translate }}</label>
-    <input id="password" type="password" autocomplete="current-password" [formField]="credentials.password" />
+    <form [formRoot]="credentials">
+      <label for="username">{{ 'LOGIN.USERNAME' | translate }}</label>
+      <input id="username" type="text" autocomplete="username" [formField]="credentials.username" />
 
-    <button type="submit">{{ 'LOGIN.SUBMIT' | translate }}</button>
-  </form>
+      <label for="password">{{ 'LOGIN.PASSWORD' | translate }}</label>
+      <input id="password" type="password" autocomplete="current-password" [formField]="credentials.password" />
 
-  @if (errorKey(); as key) {
-    <p role="alert">{{ key | translate }}</p>
-  }
-  <a routerLink="/registration">{{ 'LOGIN.REGISTER' | translate }}</a>
+      <button type="submit">{{ 'LOGIN.SUBMIT' | translate }}</button>
+    </form>
+
+    @if (errorKey(); as key) {
+      <p role="alert">{{ key | translate }}</p>
+    }
+    <p data-role="switch">
+      {{ 'LOGIN.NO_ACCOUNT' | translate }}
+      <a routerLink="/registration">{{ 'LOGIN.REGISTER' | translate }}</a>
+    </p>
+  </section>
 </main>

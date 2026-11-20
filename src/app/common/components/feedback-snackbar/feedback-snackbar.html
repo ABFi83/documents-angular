@@ -1,6 +1,7 @@
 <ul>
   @for (notification of notifications(); track notification.id) {
     <li role="alert">
+      <i aria-hidden="true">error_outline</i>
       <p>
         <strong>{{ 'COMMON.ERROR' | translate }}</strong>
         {{ notification.message }}

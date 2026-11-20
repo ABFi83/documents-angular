@@ -25,7 +25,7 @@ describe('Experiences', () => {
   });
 
   const companies = (): string[] =>
-    [...element.querySelectorAll('button[data-role="view"]')].map(item => item.textContent?.trim().split(' - ')[0] ?? '');
+    [...element.querySelectorAll('button[data-role="view"] strong')].map(item => item.textContent?.trim() ?? '');
 
   const dialog = () => fixture.debugElement.query(By.directive(ExperienceDialog))?.componentInstance as ExperienceDialog | undefined;
 

@@ -1,7 +1,7 @@
 <header>
   <h2>{{ 'SKILLS.TITLE' | translate }}</h2>
   <button type="button" data-role="add" [attr.aria-label]="'SKILLS.ADD' | translate" [title]="'SKILLS.ADD' | translate" (click)="openDialog()">
-    <i aria-hidden="true">add_circle_outline</i>
+    <i aria-hidden="true">add</i>
   </button>
 </header>
 <ul>
@@ -9,7 +9,7 @@
     <li>
       <span>{{ skill.name }}</span>
       <button type="button" [attr.aria-label]="'SKILLS.REMOVE' | translate" [title]="'SKILLS.REMOVE' | translate" (click)="remove(skill)">
-        <i aria-hidden="true">remove_circle_outline</i>
+        <i aria-hidden="true">close</i>
       </button>
     </li>
   }

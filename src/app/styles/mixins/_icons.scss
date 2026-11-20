@@ -1,5 +1,5 @@
 /// Ligature icon from the Material Icons font (loaded in index.html): `<i aria-hidden="true">edit</i>`.
-@mixin material-icon($size: 1.2em) {
+@mixin material-icon($size: 1.25em) {
   display: inline-block;
   font-family: 'Material Icons', sans-serif;
   font-size: $size;
