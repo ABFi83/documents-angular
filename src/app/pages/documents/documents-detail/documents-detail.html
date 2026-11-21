@@ -1,0 +1,84 @@
+<main>
+  <a routerLink="/documents" data-role="back"><i aria-hidden="true">arrow_back</i>{{ 'DOCUMENTS.BACK' | translate }}</a>
+
+  @if (view(); as cv) {
+    <header>
+      <h1>{{ cv.title }}</h1>
+      <p>{{ 'DOCUMENTS.UPLOADED_AT' | translate: { date: cv.uploadedAt } }}</p>
+      <span data-role="status" [attr.data-status]="cv.status">{{ 'DOCUMENTS.STATUS.' + cv.status | translate }}</span>
+      <button type="button" data-role="download" (click)="download(cv.id, cv.title)"><i aria-hidden="true">download</i>{{ 'DOCUMENTS.DOWNLOAD' | translate }}</button>
+    </header>
+
+    @switch (cv.status) {
+      @case ('ERROR') {
+        <p role="alert">{{ cv.errorMessage || ('DOCUMENTS.ERROR_GENERIC' | translate) }}</p>
+      }
+      @case ('COMPLETED') {
+        <div data-role="result">
+          <section aria-labelledby="cv-person">
+            <h2 id="cv-person">{{ 'DOCUMENTS.PERSON' | translate }}</h2>
+            @if (cv.person; as person) {
+              <p data-role="person">{{ person }}</p>
+            } @else {
+              <p data-role="none">{{ 'DOCUMENTS.NOT_DETECTED' | translate }}</p>
+            }
+          </section>
+
+          <section aria-labelledby="cv-skills">
+            <h2 id="cv-skills">{{ 'DOCUMENTS.SKILLS' | translate }}</h2>
+            <h3 id="cv-languages">{{ 'DOCUMENTS.LANGUAGES' | translate }}</h3>
+            @if (cv.languages.length) {
+              <ul aria-labelledby="cv-languages" data-role="languages">
+                @for (language of cv.languages; track language) {
+                  <li>{{ language }}</li>
+                }
+              </ul>
+            } @else {
+              <p data-role="none">{{ 'DOCUMENTS.NONE' | translate }}</p>
+            }
+            <h3 id="cv-frameworks">{{ 'DOCUMENTS.FRAMEWORKS' | translate }}</h3>
+            @if (cv.frameworks.length) {
+              <ul aria-labelledby="cv-frameworks" data-role="frameworks">
+                @for (framework of cv.frameworks; track framework) {
+                  <li>{{ framework }}</li>
+                }
+              </ul>
+            } @else {
+              <p data-role="none">{{ 'DOCUMENTS.NONE' | translate }}</p>
+            }
+          </section>
+
+          <section aria-labelledby="cv-experiences" data-role="experiences">
+            <h2 id="cv-experiences">{{ 'DOCUMENTS.EXPERIENCES' | translate }}</h2>
+            @if (cv.experiences.length) {
+              <ol>
+                @for (experience of cv.experiences; track experience.index) {
+                  <li>
+                    <h3>{{ experience.role }}</h3>
+                    <p data-role="company">{{ experience.company }}</p>
+                    @if (experience.start || experience.end) {
+                      <p data-role="period">{{ experience.start ?? '…' }} – {{ experience.end ?? ('DOCUMENTS.PRESENT' | translate) }}</p>
+                    }
+                    @if (experience.description; as description) {
+                      <p data-role="description">{{ description }}</p>
+                    }
+                  </li>
+                }
+              </ol>
+            } @else {
+              <p data-role="none">{{ 'DOCUMENTS.NO_EXPERIENCES' | translate }}</p>
+            }
+          </section>
+        </div>
+      }
+      @default {
+        <section data-role="analyzing" role="status">
+          <p>{{ 'DOCUMENTS.ANALYZING' | translate }}</p>
+          <div role="progressbar" [attr.aria-label]="'DOCUMENTS.ANALYZING' | translate"><div></div></div>
+        </section>
+      }
+    }
+  } @else {
+    <div role="progressbar" [attr.aria-label]="'DOCUMENTS.LOADING' | translate"><div></div></div>
+  }
+</main>

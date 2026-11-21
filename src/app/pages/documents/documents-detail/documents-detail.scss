@@ -1,0 +1,197 @@
+@use 'functions' as fn;
+@use 'mixins' as mix;
+
+main {
+  @include mix.page;
+}
+
+a[data-role='back'] {
+  display: inline-flex;
+  align-items: center;
+  gap: fn.calc-unit(0.75);
+  align-self: flex-start;
+  padding: fn.calc-unit(0.5) fn.calc-unit();
+  border-radius: fn.calc-unit(1.25);
+  color: fn.get-color('primary', 800);
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover {
+    background: fn.get-color('primary', 50);
+  }
+
+  &:focus-visible {
+    @include mix.focus-ring;
+  }
+
+  i {
+    @include mix.material-icon;
+  }
+}
+
+// Title over upload date on the start side; status and download on the end side.
+header {
+  @include mix.page-header;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  column-gap: fn.calc-unit(2);
+  align-items: center;
+
+  h1 {
+    overflow-wrap: anywhere;
+  }
+
+  p {
+    grid-area: 2 / 1;
+  }
+}
+
+span[data-role='status'] {
+  @include mix.status-badge;
+
+  grid-area: 1 / 2 / span 2;
+}
+
+button[data-role='download'] {
+  @include mix.secondary-button;
+
+  grid-area: 1 / 3 / span 2;
+}
+
+p[role='alert'] {
+  @include mix.error-text;
+}
+
+section {
+  @include mix.card;
+
+  display: flex;
+  flex-direction: column;
+  gap: fn.calc-unit(1.5);
+  padding: fn.calc-unit(3);
+}
+
+section[data-role='analyzing'] {
+  gap: fn.calc-unit(2);
+  color: fn.get-color('neutral', 700);
+}
+
+[role='progressbar'] {
+  @include mix.indeterminate-bar;
+}
+
+div[data-role='result'] {
+  display: grid;
+  align-items: start;
+  gap: fn.calc-unit(3);
+}
+
+h2 {
+  font-size: 1.25em;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 1em;
+  font-weight: 600;
+}
+
+h3[id] {
+  margin-block-start: fn.calc-unit();
+  color: fn.get-color('neutral', 700);
+  font-size: 0.875em;
+}
+
+p[data-role='person'] {
+  font-size: 1.125em;
+  font-weight: 600;
+}
+
+p[data-role='none'] {
+  color: fn.get-color('neutral', 700);
+}
+
+ul {
+  @include mix.chip-list($removable: false);
+}
+
+ol {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+// Experiences as a timeline: a dot per role on a vertical line.
+ol li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: fn.calc-unit(0.25);
+  padding-block: 0 fn.calc-unit(2.5);
+  padding-inline-start: fn.calc-unit(3.5);
+  border-inline-start: 1px solid fn.get-color('neutral', 300);
+  margin-inline-start: fn.calc-unit(0.75);
+
+  &:last-child {
+    padding-block-end: 0;
+    border-inline-start-color: transparent;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-block-start: fn.calc-unit(0.5);
+
+    // Centered on the 1px line: half the dot plus half the line.
+    inset-inline-start: fn.calc-unit(-0.9375);
+    inline-size: fn.calc-unit(1.75);
+    block-size: fn.calc-unit(1.75);
+    border: fn.calc-unit(0.375) solid white;
+    border-radius: 50%;
+    background: fn.get-color('primary', 700);
+    box-shadow: 0 0 0 1px fn.get-color('primary', 300);
+  }
+}
+
+p[data-role='company'] {
+  font-weight: 500;
+}
+
+p[data-role='period'] {
+  color: fn.get-color('neutral', 700);
+  font-size: 0.875em;
+}
+
+p[data-role='description'] {
+  margin-block-start: fn.calc-unit(0.75);
+  color: fn.get-color('neutral', 700);
+  white-space: pre-line;
+}
+
+@container (inline-size > #{fn.calc-unit(112)}) {
+  div[data-role='result'] {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  }
+
+  section[data-role='experiences'] {
+    grid-area: 1 / 2 / span 2;
+  }
+}
+
+@container (inline-size < #{fn.calc-unit(60)}) {
+  header {
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: fn.calc-unit(1.5);
+  }
+
+  span[data-role='status'] {
+    grid-area: 1 / 2;
+  }
+
+  button[data-role='download'] {
+    grid-area: 3 / 1 / auto / -1;
+  }
+}

@@ -17,7 +17,7 @@ test.describe('auth', () => {
     await page.getByRole('button', { name: 'Accedi' }).click();
 
     await expect(page).toHaveURL(/\/main$/);
-    await expect(page.getByText('Carica il tuo CV')).toBeVisible();
+    await expect(page.getByText('Scegli i CV')).toBeVisible();
   });
 
   test('shows an error when the BE returns no token', async ({ page }) => {

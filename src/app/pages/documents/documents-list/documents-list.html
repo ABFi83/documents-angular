@@ -1,0 +1,33 @@
+<main>
+  <header>
+    <h1>{{ 'DOCUMENTS.TITLE' | translate }}</h1>
+    <p>{{ 'DOCUMENTS.SUBTITLE' | translate }}</p>
+  </header>
+
+  <section aria-labelledby="documents-list-title">
+    <h2 id="documents-list-title">{{ 'DOCUMENTS.LIST_TITLE' | translate }}</h2>
+    @if (loaded()) {
+      @if (items().length) {
+        <ul>
+          @for (item of items(); track item.id) {
+            <li>
+              <a [routerLink]="['/documents', item.id]">
+                <i aria-hidden="true">description</i>
+                <strong>{{ item.title }}</strong>
+                <span data-role="date">{{ 'DOCUMENTS.UPLOADED_AT' | translate: { date: item.uploadedAt } }}</span>
+                <span data-role="status" [attr.data-status]="item.status">{{ 'DOCUMENTS.STATUS.' + item.status | translate }}</span>
+                <i aria-hidden="true">chevron_right</i>
+              </a>
+            </li>
+          }
+        </ul>
+      } @else {
+        <p data-role="empty">{{ 'DOCUMENTS.EMPTY' | translate }}</p>
+      }
+    } @else {
+      <div role="progressbar" [attr.aria-label]="'DOCUMENTS.LOADING' | translate"><div></div></div>
+    }
+  </section>
+
+  <app-document-upload (uploaded)="onUploaded()" />
+</main>

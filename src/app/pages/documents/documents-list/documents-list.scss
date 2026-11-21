@@ -1,0 +1,145 @@
+@use 'functions' as fn;
+@use 'mixins' as mix;
+
+main {
+  @include mix.page;
+
+  display: grid;
+  align-items: start;
+}
+
+header {
+  @include mix.page-header;
+}
+
+section {
+  @include mix.card;
+
+  display: flex;
+  flex-direction: column;
+  gap: fn.calc-unit(2);
+  padding: fn.calc-unit(3);
+}
+
+h2 {
+  font-size: 1.25em;
+  font-weight: 700;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  border-block-end: 1px solid fn.get-color('neutral', 200);
+
+  &:last-child {
+    border-block-end: none;
+  }
+}
+
+// One CV per row: icon | title over date | status | chevron. The whole row opens the detail.
+a {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  column-gap: fn.calc-unit(1.5);
+  align-items: center;
+  margin-block: fn.calc-unit(0.75);
+  padding: fn.calc-unit();
+  border-radius: fn.calc-unit(1.25);
+  color: inherit;
+  text-decoration: none;
+  transition: background 0.2s;
+
+  &:hover {
+    background: fn.get-color('neutral', 100);
+  }
+
+  &:focus-visible {
+    @include mix.focus-ring;
+  }
+
+  > i {
+    @include mix.material-icon;
+  }
+
+  > i:first-child {
+    grid-row: span 2;
+    padding: fn.calc-unit(1.25);
+    border-radius: fn.calc-unit(1.25);
+    background: fn.get-color('primary', 50);
+    color: fn.get-color('primary', 800);
+  }
+
+  > i:last-child {
+    grid-area: 1 / 4 / span 2;
+    color: fn.get-color('neutral', 600);
+  }
+}
+
+strong {
+  overflow: hidden;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+span[data-role='date'] {
+  grid-area: 2 / 2;
+  color: fn.get-color('neutral', 700);
+  font-size: 0.875em;
+}
+
+span[data-role='status'] {
+  @include mix.status-badge;
+
+  grid-area: 1 / 3 / span 2;
+}
+
+p[data-role='empty'] {
+  padding-block: fn.calc-unit(3);
+  color: fn.get-color('neutral', 700);
+  text-align: center;
+}
+
+[role='progressbar'] {
+  @include mix.indeterminate-bar;
+}
+
+app-document-upload {
+  max-inline-size: none;
+}
+
+@container (inline-size > #{fn.calc-unit(112)}) {
+  main {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+
+  header {
+    grid-column: 1 / -1;
+  }
+}
+
+// Narrow screens: the status goes under the date, so the title keeps the whole width.
+@container (inline-size < #{fn.calc-unit(60)}) {
+  a {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    row-gap: fn.calc-unit(0.5);
+
+    > i:first-child {
+      grid-row: span 3;
+      align-self: start;
+    }
+
+    > i:last-child {
+      grid-area: 1 / 3 / span 3;
+    }
+  }
+
+  span[data-role='status'] {
+    grid-area: 3 / 2;
+    justify-self: start;
+  }
+}
