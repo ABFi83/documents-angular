@@ -1,9 +1,13 @@
-<app-main-header [user]="user()" (profileReset)="onProfileReset()" />
 <main>
+  <header>
+    <h1>{{ 'MAIN.TITLE' | translate }}</h1>
+    <p>{{ (showDocumentUpload() ? 'MAIN.SUBTITLE_EMPTY' : 'MAIN.SUBTITLE') | translate }}</p>
+  </header>
   @if (showDocumentUpload()) {
-    <app-document-upload (uploadCompleted)="onUploadCompleted()" />
+    <app-document-upload (uploaded)="onUploaded()" />
   } @else {
     @let profile = user();
+    <app-cv-summary />
     <app-skills [skills]="profile?.skill ?? []" />
     <app-experiences [experiences]="profile?.experience ?? []" />
   }

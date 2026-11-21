@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { API, buildDocument, login, mockDocuments, mockUser, userWithProfile } from '../support/mock-api';
 
-test.describe('CV history', () => {
+test.describe('CV list', () => {
   test.beforeEach(async ({ page }) => {
     await login(page);
     await mockUser(page, userWithProfile);
@@ -10,10 +10,10 @@ test.describe('CV history', () => {
 
   test('is reachable from the header and lists the CVs with their status', async ({ page }) => {
     await page.goto('/main');
-    await page.getByRole('navigation').getByRole('link', { name: 'Storico CV' }).click();
+    await page.getByRole('navigation').getByRole('link', { name: 'Lista CV' }).click();
 
     await expect(page).toHaveURL(/\/documents$/);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Storico CV');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Lista CV');
     const rows = page.getByRole('listitem').filter({ has: page.getByRole('link') });
     await expect(rows).toHaveCount(2);
     await expect(rows.first()).toContainText('cv-2.pdf');
@@ -46,7 +46,37 @@ test.describe('CV history', () => {
     await page.goto('/documents/1');
 
     await expect(page.getByRole('alert')).toHaveText('PDF illeggibile');
-    await page.getByRole('link', { name: 'Storico CV' }).last().click();
+    await page.getByRole('link', { name: 'Lista CV' }).last().click();
     await expect(page).toHaveURL(/\/documents$/);
+  });
+
+  test('deletes a CV, even one still under analysis, after the confirmation', async ({ page }) => {
+    const deleted = await mockDocuments(page, () => [buildDocument(3, 'PENDING'), buildDocument(2, 'COMPLETED')]);
+    await page.goto('/documents');
+
+    await page.getByRole('button', { name: 'Elimina cv-3.pdf' }).click();
+    const dialog = page.getByRole('alertdialog');
+    await expect(dialog).toContainText('è ancora in analisi');
+    await dialog.getByRole('button', { name: 'Elimina' }).click();
+
+    await expect(page.getByRole('link', { name: /cv-3\.pdf/ })).toHaveCount(0);
+    await expect(page.getByRole('link', { name: /cv-2\.pdf/ })).toBeVisible();
+    expect([...deleted]).toEqual([3]);
+  });
+
+  test('deletes a CV from its detail and goes back to the list', async ({ page }) => {
+    const deleted = await mockDocuments(page, () => [buildDocument(2, 'COMPLETED')]);
+    await page.goto('/documents/2');
+
+    await page.getByRole('button', { name: 'Elimina CV' }).click();
+    await page.getByRole('alertdialog').getByRole('button', { name: 'Annulla' }).click();
+    expect(deleted.size).toBe(0);
+
+    await page.getByRole('button', { name: 'Elimina CV' }).click();
+    await page.getByRole('alertdialog').getByRole('button', { name: 'Elimina' }).click();
+
+    await expect(page).toHaveURL(/\/documents$/);
+    await expect(page.getByText('Non hai ancora caricato nessun CV.')).toBeVisible();
+    expect([...deleted]).toEqual([2]);
   });
 });

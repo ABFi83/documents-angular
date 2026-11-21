@@ -7,6 +7,7 @@ import { DocumentApiService } from './document-api.service';
 describe('DocumentApiService', () => {
   let service: DocumentApiService;
   let http: HttpTestingController;
+  const url = `${environment.apiBaseUrl}/documents`;
 
   beforeEach(() => {
     TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting()] });
@@ -16,20 +17,40 @@ describe('DocumentApiService', () => {
 
   afterEach(() => http.verify());
 
-  it('uploads the file as multipart form data', () => {
-    const file = new File(['%PDF'], 'cv.pdf', { type: 'application/pdf' });
-    service.upload('cv.pdf', '', file).subscribe();
+  it('uploads every file in the repeated `files` field', () => {
+    const files = [new File(['%PDF'], 'a.pdf'), new File(['%PDF'], 'b.pdf')];
+    service.upload(files).subscribe();
 
-    const req = http.expectOne(`${environment.apiBaseUrl}/documents`);
+    const req = http.expectOne(url);
     const body = req.request.body as FormData;
     expect(req.request.method).toBe('POST');
-    expect(body.get('title')).toBe('cv.pdf');
+    expect((body.getAll('files') as File[]).map(file => file.name)).toEqual(['a.pdf', 'b.pdf']);
     expect(body.get('metadata')).toBe('');
-    expect((body.get('file') as File).name).toBe('cv.pdf');
   });
 
-  it('gets a process by id', () => {
-    service.process(7).subscribe();
-    expect(http.expectOne(`${environment.apiBaseUrl}/process/7`).request.method).toBe('GET');
+  it('gets the CV list', () => {
+    service.list().subscribe();
+    expect(http.expectOne(url).request.method).toBe('GET');
+  });
+
+  it('gets the summary of the CVs', () => {
+    service.summary().subscribe();
+    expect(http.expectOne(`${url}/summary`).request.method).toBe('GET');
+  });
+
+  it('gets a CV by id', () => {
+    service.get(7).subscribe();
+    expect(http.expectOne(`${url}/7`).request.method).toBe('GET');
+  });
+
+  it('downloads the PDF as a blob', () => {
+    service.download(7).subscribe();
+    const req = http.expectOne(`${url}/download/7`);
+    expect(req.request.responseType).toBe('blob');
+  });
+
+  it('deletes a CV by id', () => {
+    service.delete(7).subscribe();
+    expect(http.expectOne(`${url}/7`).request.method).toBe('DELETE');
   });
 });

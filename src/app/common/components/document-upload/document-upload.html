@@ -1,0 +1,49 @@
+<header>
+  <h2>{{ 'UPLOAD.TITLE' | translate }}</h2>
+  <p>{{ 'UPLOAD.INTRO' | translate }}</p>
+</header>
+
+<section (dragover)="onDragOver($event)" (drop)="onDrop($event)">
+  <input id="file-input" type="file" multiple accept="application/pdf" (change)="onFileSelected($event)" />
+  <label for="file-input">
+    <i aria-hidden="true">upload_file</i>
+    <strong>{{ 'UPLOAD.CHOOSE_FILES' | translate }}</strong>
+    <span>{{ 'UPLOAD.HINT' | translate }}</span>
+  </label>
+</section>
+
+@if (rows().length) {
+  <ul [attr.aria-label]="'UPLOAD.SELECTED' | translate">
+    @for (row of rows(); track row.file) {
+      <li [attr.data-invalid]="!row.pdf">
+        <i aria-hidden="true">{{ row.pdf ? 'picture_as_pdf' : 'block' }}</i>
+        <span>{{ row.file.name }}</span>
+        <button type="button" [attr.aria-label]="'UPLOAD.REMOVE_FILE' | translate: { name: row.file.name }" (click)="remove(row.file)">
+          <i aria-hidden="true">close</i>
+        </button>
+      </li>
+    }
+  </ul>
+}
+
+@if (notPdf(); as names) {
+  <p role="alert">{{ 'UPLOAD.ERRORS.NOT_PDF' | translate: { files: names } }}</p>
+}
+@if (error(); as failure) {
+  <p role="alert">{{ failure.key | translate: failure.params }}</p>
+}
+@if (isUploading()) {
+  <div role="progressbar" [attr.aria-label]="'UPLOAD.PROGRESS' | translate"><div></div></div>
+}
+@if (uploadedCount()) {
+  <p role="status" data-role="success">{{ 'UPLOAD.SUCCESS' | translate: { count: uploadedCount() } }}</p>
+}
+
+@if (rows().length) {
+  <footer>
+    <button type="button" data-role="clear" [disabled]="isUploading()" (click)="clear()"><i aria-hidden="true">delete_outline</i>{{ 'UPLOAD.CLEAR' | translate }}</button>
+    @if (!notPdf() && !isUploading()) {
+      <button type="button" data-role="proceed" (click)="upload()">{{ 'UPLOAD.PROCEED' | translate: { count: rows().length } }}<i aria-hidden="true">arrow_forward</i></button>
+    }
+  </footer>
+}

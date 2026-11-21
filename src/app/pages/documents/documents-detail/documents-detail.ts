@@ -1,22 +1,26 @@
-import { Component, computed, DOCUMENT, inject, input } from '@angular/core';
+import { Component, computed, DOCUMENT, inject, input, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { ConfirmDialog } from '@common/components/confirm-dialog/confirm-dialog';
+import { CurrentUserService } from '@common/services/current-user.service';
 import { DocumentApiService } from '@common/services/document-api.service';
 import { CvDocument } from '@interfaces/document.interface';
 import { TranslatePipe } from '@ngx-translate/core';
 import { formatDateTime, formatMonth } from '@utils/date';
 import { isAnalyzing, pollWhile } from '@utils/polling';
 
-/** One CV of the history: its status and, once analyzed, what the BE extracted from it. */
+/** One CV of the list: its status and, once analyzed, what the BE extracted from it. */
 @Component({
   selector: 'app-documents-detail',
-  imports: [RouterLink, TranslatePipe],
+  imports: [ConfirmDialog, RouterLink, TranslatePipe],
   templateUrl: './documents-detail.html',
   styleUrl: './documents-detail.scss'
 })
 export class DocumentsDetail {
   #documentApi = inject(DocumentApiService);
   #document = inject(DOCUMENT);
+  #currentUser = inject(CurrentUserService);
+  #router = inject(Router);
   readonly #locale = this.#document.documentElement.lang;
 
   /** Route parameter `:id`. */
@@ -28,6 +32,8 @@ export class DocumentsDetail {
   });
 
   protected readonly view = computed(() => (this.#cv.hasValue() ? this.#toView(this.#cv.value()) : null));
+  protected readonly confirmingDelete = signal(false);
+  protected readonly deleting = signal(false);
 
   // The download needs the auth header, so it goes through HttpClient and a temporary object URL.
   protected download(id: number, title: string): void {
@@ -39,6 +45,30 @@ export class DocumentsDetail {
     });
   }
 
+  protected askDelete(): void {
+    this.confirmingDelete.set(true);
+  }
+
+  protected cancelDelete(): void {
+    this.confirmingDelete.set(false);
+  }
+
+  // A CV still waiting for its analysis can be deleted too; then back to the CV list.
+  protected delete(id: number): void {
+    this.confirmingDelete.set(false);
+    this.deleting.set(true);
+    this.#documentApi.delete(id).subscribe({
+      next: () => {
+        this.#currentUser.reload();
+        void this.#router.navigate(['/documents']);
+      },
+      error: error => {
+        this.deleting.set(false);
+        console.error('Error deleting CV:', error);
+      }
+    });
+  }
+
   #toView(cv: CvDocument) {
     const result = cv.process?.result;
     const person = [result?.nome, result?.cognome].filter(Boolean).join(' ');
@@ -47,6 +77,7 @@ export class DocumentsDetail {
       title: cv.title,
       uploadedAt: formatDateTime(cv.created_at, this.#locale),
       status: cv.process?.status ?? 'PENDING',
+      analyzing: isAnalyzing(cv),
       errorMessage: cv.process?.error_message ?? null,
       person: person || null,
       languages: result?.linguaggi ?? [],

@@ -61,7 +61,7 @@ export const extraction = (): MockExtraction => ({
   ]
 });
 
-/** A CV of the history with its analysis in the given state. */
+/** A CV of the list with its analysis in the given state. */
 export function buildDocument(id: number, status: MockStatus, overrides: Partial<NonNullable<MockDocument['process']>> = {}): MockDocument {
   return {
     id,
@@ -84,16 +84,57 @@ export function buildDocument(id: number, status: MockStatus, overrides: Partial
   };
 }
 
-/** Serves `GET /documents` and `GET /documents/<id>`, calling `documents` on every request so a test can change them. */
-export async function mockDocuments(page: Page, documents: () => MockDocument[]): Promise<void> {
+/**
+ * Serves `GET /documents`, `GET /documents/<id>` and `DELETE /documents/<id>`, calling `documents` on every request so a
+ * test can change them; deleted CVs disappear from the next answers. Returns the ids deleted so far.
+ */
+export async function mockDocuments(page: Page, documents: () => MockDocument[]): Promise<Set<number>> {
+  const deleted = new Set<number>();
+  const current = (): MockDocument[] => documents().filter(item => !deleted.has(item.id));
   await page.route(`${API}/documents`, (route, request) =>
-    request.method() === 'GET' ? route.fulfill({ json: documents() }) : route.fallback()
+    request.method() === 'GET' ? route.fulfill({ json: current() }) : route.fallback()
   );
+  await page.route(`${API}/documents/summary`, route => route.fulfill({ json: summaryOf(current()) }));
   await page.route(new RegExp(`${API}/documents/\\d+$`), route => {
     const id = Number(route.request().url().split('/').pop());
-    const document = documents().find(item => item.id === id);
-    return document ? route.fulfill({ json: document }) : route.fulfill({ status: 404, json: { msg: 'Document not found' } });
+    const document = current().find(item => item.id === id);
+    if (!document) return route.fulfill({ status: 404, json: { msg: 'Document not found' } });
+    if (route.request().method() !== 'DELETE') return route.fulfill({ json: document });
+    deleted.add(id);
+    return route.fulfill({ status: 204 });
   });
+  return deleted;
+}
+
+/** Same rules as the BE's `somma_estrazioni`, enough for the mocks: completed CVs only, no duplicates. */
+function summaryOf(documents: MockDocument[]) {
+  const completed = documents.filter(document => document.process?.status === 'COMPLETED' && document.process.result);
+  const names = (pick: (result: MockExtraction) => string[]) => {
+    const items = new Map<string, { nome: string; document_ids: number[] }>();
+    for (const document of completed) {
+      for (const nome of pick(document.process!.result!)) {
+        const item = items.get(nome.toLowerCase()) ?? { nome, document_ids: [] };
+        item.document_ids.push(document.id);
+        items.set(nome.toLowerCase(), item);
+      }
+    }
+    return [...items.values()].sort((a, b) => b.document_ids.length - a.document_ids.length || a.nome.localeCompare(b.nome));
+  };
+  const experiences = new Map<string, MockExtraction['esperienze'][number] & { document_ids: number[] }>();
+  for (const document of completed) {
+    for (const experience of document.process!.result!.esperienze) {
+      const key = `${experience.azienda}|${experience.ruolo}|${experience.start_date}`.toLowerCase();
+      const item = experiences.get(key) ?? { ...experience, document_ids: [] };
+      item.document_ids.push(document.id);
+      experiences.set(key, item);
+    }
+  }
+  return {
+    documenti: completed.length,
+    linguaggi: names(result => result.linguaggi),
+    frameworks: names(result => result.frameworks),
+    esperienze: [...experiences.values()].sort((a, b) => (b.start_date ?? '').localeCompare(a.start_date ?? ''))
+  };
 }
 
 export function buildUser(overrides: Partial<MockUser> = {}): MockUser {

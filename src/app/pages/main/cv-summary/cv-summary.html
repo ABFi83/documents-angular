@@ -1,0 +1,86 @@
+@let summary = view();
+<header>
+  <h2 id="cv-summary-title">{{ 'SUMMARY.TITLE' | translate }}</h2>
+  @if (summary?.documents) {
+    <p>{{ 'SUMMARY.SUBTITLE' | translate: { count: summary?.documents } }}</p>
+  }
+</header>
+
+@if (summary) {
+  @if (summary.documents) {
+    <div data-role="columns">
+      <div data-role="skills">
+        @for (group of summary.groups; track group.key) {
+          <h3 [id]="'cv-summary-' + group.key">{{ group.titleKey | translate }}</h3>
+          @if (group.items.length) {
+            <ul [attr.aria-labelledby]="'cv-summary-' + group.key" data-role="chips">
+              @for (item of group.items; track item.name) {
+                <li>
+                  @if (item.sources.length === 1) {
+                    @let source = item.sources[0];
+                    <a [routerLink]="['/documents', source.id]" [title]="'SUMMARY.OPEN_CV' | translate: { title: source.label }">
+                      {{ item.name }}
+                      <span data-role="count">{{ 'SUMMARY.IN_CVS' | translate: { count: 1 } }}</span>
+                    </a>
+                  } @else {
+                    <button type="button" [attr.popovertarget]="item.popoverId">
+                      {{ item.name }}
+                      <span data-role="count">{{ 'SUMMARY.IN_CVS' | translate: { count: item.sources.length } }}</span>
+                    </button>
+                  }
+                </li>
+              }
+            </ul>
+            <!-- Popovers outside the chips list: they list the CVs of an item found in more than one. -->
+            @for (item of group.items; track item.name) {
+              @if (item.sources.length > 1) {
+                <div popover [id]="item.popoverId">
+                  <p>{{ 'SUMMARY.FOUND_IN' | translate: { name: item.name } }}</p>
+                  <ul>
+                    @for (source of item.sources; track source.id) {
+                      <li>
+                        <a [routerLink]="['/documents', source.id]"><i aria-hidden="true">description</i>{{ source.label }}</a>
+                      </li>
+                    }
+                  </ul>
+                </div>
+              }
+            }
+          } @else {
+            <p data-role="none">{{ 'DOCUMENTS.NONE' | translate }}</p>
+          }
+        }
+      </div>
+
+      <div data-role="experiences">
+        <h3 id="cv-summary-experiences">{{ 'DOCUMENTS.EXPERIENCES' | translate }}</h3>
+        @if (summary.experiences.length) {
+          <ol aria-labelledby="cv-summary-experiences">
+            @for (experience of summary.experiences; track experience.index) {
+              <li>
+                <h4>{{ experience.role }}</h4>
+                <p data-role="company">{{ experience.company }}</p>
+                @if (experience.start || experience.end) {
+                  <p data-role="period">{{ experience.start ?? '…' }} – {{ experience.end ?? ('DOCUMENTS.PRESENT' | translate) }}</p>
+                }
+                @if (experience.description; as description) {
+                  <p data-role="description">{{ description }}</p>
+                }
+                <p data-role="sources">
+                  {{ 'SUMMARY.FOUND_IN_SHORT' | translate }}
+                  @for (source of experience.sources; track source.id) {
+                    <a [routerLink]="['/documents', source.id]">{{ source.label }}</a>
+                  }
+                </p>
+              </li>
+            }
+          </ol>
+        } @else {
+          <p data-role="none">{{ 'DOCUMENTS.NO_EXPERIENCES' | translate }}</p>
+        }
+      </div>
+    </div>
+  } @else {
+    <p data-role="none">{{ 'SUMMARY.EMPTY' | translate }}</p>
+  }
+}

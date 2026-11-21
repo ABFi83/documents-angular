@@ -7,6 +7,9 @@
       <p>{{ 'DOCUMENTS.UPLOADED_AT' | translate: { date: cv.uploadedAt } }}</p>
       <span data-role="status" [attr.data-status]="cv.status">{{ 'DOCUMENTS.STATUS.' + cv.status | translate }}</span>
       <button type="button" data-role="download" (click)="download(cv.id, cv.title)"><i aria-hidden="true">download</i>{{ 'DOCUMENTS.DOWNLOAD' | translate }}</button>
+      <button type="button" data-role="delete" [disabled]="deleting()" (click)="askDelete()">
+        <i aria-hidden="true">delete_outline</i>{{ 'DOCUMENTS.DELETE.ACTION' | translate }}
+      </button>
     </header>
 
     @switch (cv.status) {
@@ -82,3 +85,13 @@
     <div role="progressbar" [attr.aria-label]="'DOCUMENTS.LOADING' | translate"><div></div></div>
   }
 </main>
+
+@if (confirmingDelete() && view(); as cv) {
+  <app-confirm-dialog
+    [title]="'DOCUMENTS.DELETE.TITLE' | translate"
+    [message]="(cv.analyzing ? 'DOCUMENTS.DELETE.MESSAGE_PENDING' : 'DOCUMENTS.DELETE.MESSAGE') | translate: { title: cv.title }"
+    [confirmLabel]="'DOCUMENTS.DELETE.CONFIRM' | translate"
+    (confirmed)="delete(cv.id)"
+    (cancelled)="cancelDelete()"
+  />
+}

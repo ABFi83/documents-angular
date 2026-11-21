@@ -12,6 +12,41 @@
       "UNAUTHORIZED": "Non sei autorizzato ad accedere a questa risorsa."
     }
   },
+  "DOCUMENTS": {
+    "ANALYZING": "Analisi del CV in corso…",
+    "BACK": "Lista CV",
+    "DELETE": {
+      "ACTION": "Elimina CV",
+      "CONFIRM": "Elimina",
+      "LABEL": "Elimina {{title}}",
+      "MESSAGE": "{{title}} e i dati estratti verranno eliminati e non contribuiranno più al profilo.",
+      "MESSAGE_PENDING": "{{title}} è ancora in analisi: l’analisi verrà interrotta e il CV eliminato.",
+      "TITLE": "Eliminare il CV?"
+    },
+    "DOWNLOAD": "Scarica PDF",
+    "EMPTY": "Non hai ancora caricato nessun CV.",
+    "ERROR_GENERIC": "Non è stato possibile analizzare il CV.",
+    "EXPERIENCES": "Esperienze",
+    "FRAMEWORKS": "Framework",
+    "LANGUAGES": "Linguaggi",
+    "LIST_TITLE": "CV caricati",
+    "LOADING": "Caricamento della lista CV",
+    "NONE": "Nessuno rilevato",
+    "NOT_DETECTED": "Non rilevati",
+    "NO_EXPERIENCES": "Nessuna esperienza rilevata",
+    "PERSON": "Nome e cognome",
+    "PRESENT": "in corso",
+    "SKILLS": "Linguaggi e framework",
+    "STATUS": {
+      "COMPLETED": "Completato",
+      "ERROR": "Errore",
+      "IN_PROGRESS": "In analisi",
+      "PENDING": "In attesa"
+    },
+    "SUBTITLE": "I CV caricati e i dati estratti da ciascuno.",
+    "TITLE": "Lista CV",
+    "UPLOADED_AT": "Caricato il {{date}}"
+  },
   "EXPERIENCES": {
     "ADD": "Aggiungi esperienza",
     "DELETE": "Elimina esperienza",
@@ -50,9 +85,16 @@
       "MENU": "Menu",
       "RESET": "Reset",
       "RESET_ERROR": "Errore durante il reset",
-      "TITLE": "Profilo",
       "WELCOME": "Benvenuto"
-    }
+    },
+    "SUBTITLE": "Il riepilogo dei tuoi CV, più le skill e le esperienze che aggiungi tu.",
+    "SUBTITLE_EMPTY": "Carica il tuo primo CV per iniziare.",
+    "TITLE": "Il tuo profilo"
+  },
+  "NAV": {
+    "CVS": "Lista CV",
+    "LABEL": "Navigazione principale",
+    "PROFILE": "Profilo"
   },
   "REGISTRATION": {
     "CONFIRM_EMAIL": "Conferma email",
@@ -81,19 +123,31 @@
     "REMOVE": "Rimuovi skill",
     "TITLE": "Skills"
   },
+  "SUMMARY": {
+    "EMPTY": "Nessun CV analizzato: il riepilogo compare quando un’analisi è completata.",
+    "FOUND_IN": "{{name}} compare in:",
+    "FOUND_IN_SHORT": "Compare in:",
+    "IN_CVS": "{{count}} CV",
+    "OPEN_CV": "Apri il CV: {{title}}",
+    "SUBTITLE": "La somma di {{count}} CV analizzati: apri una voce per vedere da quali CV arriva.",
+    "TITLE": "Riepilogo dei CV"
+  },
   "UPLOAD": {
-    "CHOOSE_FILE": "Carica il tuo CV",
-    "CLEAR": "Rimuovi file",
+    "CHOOSE_FILES": "Scegli i CV",
+    "CLEAR": "Svuota",
     "ERRORS": {
-      "NOT_PDF": "Il formato deve essere PDF",
-      "PROCESS_FAILED": "Errore durante il caricamento del documento.",
+      "NOT_PDF": "Sono accettati solo PDF. Rimuovi: {{files}}",
+      "NO_FILES": "Il server non ha ricevuto nessun file. Riprova.",
+      "REJECTED_FILES": "Il server ha rifiutato questi file perché non sono PDF: {{files}}",
       "UPLOAD_FAILED": "Errore durante il caricamento del documento. Riprova."
     },
-    "HINT": "Trascina qui il file o clicca per sceglierlo · solo PDF",
-    "INTRO": "Carica il curriculum in PDF: ne estrarremo competenze ed esperienze.",
-    "PROCEED": "Procedi",
+    "HINT": "Trascina qui i file o clicca per sceglierli · solo PDF",
+    "INTRO": "Uno o più PDF: ne estrarremo nome, competenze ed esperienze.",
+    "PROCEED": "Carica {{count}} CV",
     "PROGRESS": "Caricamento in corso",
-    "SUCCESS": "Caricamento completato con successo!",
-    "TITLE": "Iniziamo dal tuo CV"
+    "REMOVE_FILE": "Rimuovi {{name}}",
+    "SELECTED": "File selezionati",
+    "SUCCESS": "{{count}} CV caricati: l’analisi è in corso.",
+    "TITLE": "Carica i tuoi CV"
   }
 }

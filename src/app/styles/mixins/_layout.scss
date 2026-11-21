@@ -12,6 +12,38 @@
   box-shadow: fn.card-shadow(2, 6%);
 }
 
+/// Content area of a page behind the login: centered, with gutters that shrink on narrow screens.
+/// Needs the `AppShell` container.
+@mixin page {
+  display: flex;
+  flex-direction: column;
+  gap: fn.calc-unit(3);
+  max-inline-size: fn.calc-unit(140);
+  margin-inline: auto;
+  padding: fn.calc-unit(4) fn.calc-unit(3);
+
+  @container (inline-size < #{fn.calc-unit(60)}) {
+    padding: fn.calc-unit(2.5) fn.calc-unit(2);
+  }
+}
+
+/// Title and subtitle on top of a page.
+@mixin page-header {
+  display: flex;
+  flex-direction: column;
+  gap: fn.calc-unit(0.5);
+
+  h1 {
+    font-size: 1.75em;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    color: fn.get-color('neutral', 700);
+  }
+}
+
 /// App logo: a tinted tile with the document icon, followed by the app name.
 @mixin brand {
   display: inline-flex;
@@ -121,6 +153,32 @@
 
     &:focus-visible {
       @include focus-ring;
+    }
+  }
+}
+
+/// Indeterminate progress bar (`<div role="progressbar"><div></div></div>`): the BE does not report progress.
+@mixin indeterminate-bar {
+  block-size: fn.calc-unit(0.75);
+  overflow: hidden;
+  border-radius: fn.calc-unit(0.75);
+  background: fn.get-color('primary', 50);
+
+  > div {
+    inline-size: 40%;
+    block-size: 100%;
+    border-radius: inherit;
+    background: fn.get-color('primary', 700);
+    animation: indeterminate-bar 1.4s ease-in-out infinite;
+  }
+
+  @keyframes indeterminate-bar {
+    from {
+      transform: translateX(-100%);
+    }
+
+    to {
+      transform: translateX(250%);
     }
   }
 }

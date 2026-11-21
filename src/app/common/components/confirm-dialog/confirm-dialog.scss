@@ -1,0 +1,19 @@
+@use 'functions' as fn;
+@use 'mixins' as mix;
+
+dialog {
+  @include mix.dialog-surface(fn.calc-unit(55));
+}
+
+p {
+  color: fn.get-color('neutral', 700);
+}
+
+// Destructive action: the solid button takes the error hue.
+dialog footer button[data-role='confirm'] {
+  background: fn.get-color('error', 700);
+
+  &:hover {
+    background: fn.get-color('error', 900);
+  }
+}

@@ -12,6 +12,41 @@
       "UNAUTHORIZED": "You are not authorized to access this resource."
     }
   },
+  "DOCUMENTS": {
+    "ANALYZING": "Analyzing the CV…",
+    "BACK": "CV list",
+    "DELETE": {
+      "ACTION": "Delete CV",
+      "CONFIRM": "Delete",
+      "LABEL": "Delete {{title}}",
+      "MESSAGE": "{{title}} and its extracted data will be deleted and will no longer add to your profile.",
+      "MESSAGE_PENDING": "{{title}} is still being analyzed: the analysis will be stopped and the CV deleted.",
+      "TITLE": "Delete the CV?"
+    },
+    "DOWNLOAD": "Download PDF",
+    "EMPTY": "You have not uploaded any CV yet.",
+    "ERROR_GENERIC": "The CV could not be analyzed.",
+    "EXPERIENCES": "Experiences",
+    "FRAMEWORKS": "Frameworks",
+    "LANGUAGES": "Languages",
+    "LIST_TITLE": "Uploaded CVs",
+    "LOADING": "Loading the CV list",
+    "NONE": "None detected",
+    "NOT_DETECTED": "Not detected",
+    "NO_EXPERIENCES": "No experience detected",
+    "PERSON": "Name and surname",
+    "PRESENT": "present",
+    "SKILLS": "Languages and frameworks",
+    "STATUS": {
+      "COMPLETED": "Completed",
+      "ERROR": "Error",
+      "IN_PROGRESS": "Analyzing",
+      "PENDING": "Pending"
+    },
+    "SUBTITLE": "Your uploaded CVs and the data extracted from each one.",
+    "TITLE": "CV list",
+    "UPLOADED_AT": "Uploaded on {{date}}"
+  },
   "EXPERIENCES": {
     "ADD": "Add experience",
     "DELETE": "Delete experience",
@@ -50,9 +85,16 @@
       "MENU": "Menu",
       "RESET": "Reset",
       "RESET_ERROR": "Error during reset",
-      "TITLE": "Profile",
       "WELCOME": "Welcome"
-    }
+    },
+    "SUBTITLE": "The summary of your CVs, plus the skills and experiences you add yourself.",
+    "SUBTITLE_EMPTY": "Upload your first CV to get started.",
+    "TITLE": "Your profile"
+  },
+  "NAV": {
+    "CVS": "CV list",
+    "LABEL": "Main navigation",
+    "PROFILE": "Profile"
   },
   "REGISTRATION": {
     "CONFIRM_EMAIL": "Confirm email",
@@ -81,19 +123,31 @@
     "REMOVE": "Remove skill",
     "TITLE": "Skills"
   },
+  "SUMMARY": {
+    "EMPTY": "No analyzed CV yet: the summary appears once an analysis is completed.",
+    "FOUND_IN": "{{name}} appears in:",
+    "FOUND_IN_SHORT": "Appears in:",
+    "IN_CVS": "{{count}} CV(s)",
+    "OPEN_CV": "Open the CV: {{title}}",
+    "SUBTITLE": "The sum of {{count}} analyzed CV(s): open an item to see which CVs it comes from.",
+    "TITLE": "CV summary"
+  },
   "UPLOAD": {
-    "CHOOSE_FILE": "Upload your CV",
-    "CLEAR": "Remove file",
+    "CHOOSE_FILES": "Choose your CVs",
+    "CLEAR": "Clear",
     "ERRORS": {
-      "NOT_PDF": "The file must be a PDF",
-      "PROCESS_FAILED": "Error while uploading the document.",
+      "NOT_PDF": "Only PDFs are accepted. Remove: {{files}}",
+      "NO_FILES": "The server received no file. Please try again.",
+      "REJECTED_FILES": "The server rejected these files because they are not PDFs: {{files}}",
       "UPLOAD_FAILED": "Error while uploading the document. Please try again."
     },
-    "HINT": "Drop the file here or click to choose it · PDF only",
-    "INTRO": "Upload your resume as a PDF: we will extract your skills and experiences.",
-    "PROCEED": "Continue",
+    "HINT": "Drop the files here or click to choose them · PDF only",
+    "INTRO": "One or more PDFs: we will extract name, skills and experiences.",
+    "PROCEED": "Upload {{count}} CV(s)",
     "PROGRESS": "Uploading",
-    "SUCCESS": "Upload completed successfully!",
-    "TITLE": "Let us start from your CV"
+    "REMOVE_FILE": "Remove {{name}}",
+    "SELECTED": "Selected files",
+    "SUCCESS": "{{count}} CV(s) uploaded: the analysis is in progress.",
+    "TITLE": "Upload your CVs"
   }
 }

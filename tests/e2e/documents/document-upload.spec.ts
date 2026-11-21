@@ -27,7 +27,7 @@ test.describe('document upload', () => {
     await expect(page.getByRole('button', { name: 'Carica 1 CV' })).toBeVisible();
   });
 
-  test('uploads the CVs, then follows their analysis in the history', async ({ page }) => {
+  test('uploads the CVs, then follows their analysis in the CV list', async ({ page }) => {
     let uploaded = 0;
     await page.route(`${API}/documents`, (route, request) => {
       if (request.method() !== 'POST') return route.fallback();

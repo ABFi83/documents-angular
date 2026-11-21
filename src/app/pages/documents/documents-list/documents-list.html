@@ -18,6 +18,16 @@
                 <span data-role="status" [attr.data-status]="item.status">{{ 'DOCUMENTS.STATUS.' + item.status | translate }}</span>
                 <i aria-hidden="true">chevron_right</i>
               </a>
+              <button
+                type="button"
+                data-role="delete"
+                [disabled]="deletingId() === item.id"
+                [attr.aria-label]="'DOCUMENTS.DELETE.LABEL' | translate: { title: item.title }"
+                [title]="'DOCUMENTS.DELETE.LABEL' | translate: { title: item.title }"
+                (click)="askDelete(item)"
+              >
+                <i aria-hidden="true">delete_outline</i>
+              </button>
             </li>
           }
         </ul>
@@ -31,3 +41,13 @@
 
   <app-document-upload (uploaded)="onUploaded()" />
 </main>
+
+@if (toDelete(); as item) {
+  <app-confirm-dialog
+    [title]="'DOCUMENTS.DELETE.TITLE' | translate"
+    [message]="(item.analyzing ? 'DOCUMENTS.DELETE.MESSAGE_PENDING' : 'DOCUMENTS.DELETE.MESSAGE') | translate: { title: item.title }"
+    [confirmLabel]="'DOCUMENTS.DELETE.CONFIRM' | translate"
+    (confirmed)="confirmDelete()"
+    (cancelled)="cancelDelete()"
+  />
+}

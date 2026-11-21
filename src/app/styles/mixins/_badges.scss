@@ -1,0 +1,59 @@
+@use 'functions' as fn;
+
+/// Pill with the analysis status of a CV: `<span data-role="status" [attr.data-status]="status">`.
+@mixin status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: fn.calc-unit(0.75);
+  padding: fn.calc-unit(0.25) fn.calc-unit(1.25);
+  border: 1px solid fn.get-color('neutral', 300);
+  border-radius: fn.calc-unit(5);
+  background: fn.get-color('neutral', 100);
+  color: fn.get-color('neutral', 700);
+  font-size: 0.8125em;
+  font-weight: 600;
+  white-space: nowrap;
+
+  &::before {
+    content: '';
+    inline-size: fn.calc-unit(0.875);
+    block-size: fn.calc-unit(0.875);
+    border-radius: 50%;
+    background: currentcolor;
+  }
+
+  &[data-status='PENDING'],
+  &[data-status='IN_PROGRESS'] {
+    border-color: fn.get-color('primary', 100);
+    background: fn.get-color('primary', 50);
+    color: fn.get-color('primary', 900);
+
+    &::before {
+      animation: status-pulse 1.2s ease-in-out infinite;
+    }
+  }
+
+  &[data-status='COMPLETED'] {
+    border-color: fn.color-mix-func(fn.get-color('success', 800), transparent, 35%);
+    background: fn.get-color('success', 50);
+    color: fn.get-color('success', 800);
+  }
+
+  &[data-status='ERROR'] {
+    border-color: fn.color-mix-func(fn.get-color('error', 600), transparent, 40%);
+    background: fn.get-color('error', 50);
+    color: fn.get-color('error', 900);
+  }
+
+  @keyframes status-pulse {
+    50% {
+      opacity: 0.3;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::before {
+      animation: none;
+    }
+  }
+}

@@ -83,6 +83,52 @@ label span {
   font-size: 0.875em;
 }
 
+ul {
+  display: flex;
+  flex-direction: column;
+  gap: fn.calc-unit();
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  gap: fn.calc-unit(1.25);
+  padding: fn.calc-unit(0.75) fn.calc-unit(0.75) fn.calc-unit(0.75) fn.calc-unit(1.5);
+  border: 1px solid fn.get-color('neutral', 200);
+  border-radius: fn.calc-unit(1.25);
+
+  > i {
+    @include mix.material-icon;
+
+    color: fn.get-color('primary', 800);
+  }
+
+  span {
+    flex: 1;
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  button {
+    @include mix.danger-icon-button(fn.calc-unit(4));
+  }
+
+  &[data-invalid='true'] {
+    border-color: fn.color-mix-func(fn.get-color('error', 600), transparent, 40%);
+    background: fn.get-color('error', 50);
+    color: fn.get-color('error', 900);
+
+    > i {
+      color: inherit;
+    }
+  }
+}
+
 footer {
   display: flex;
   flex-wrap: wrap;
@@ -120,28 +166,6 @@ p[data-role='success'] {
   }
 }
 
-// Indeterminate bar: the BE does not report progress.
 [role='progressbar'] {
-  block-size: fn.calc-unit(0.75);
-  overflow: hidden;
-  border-radius: fn.calc-unit(0.75);
-  background: fn.get-color('primary', 50);
-
-  > div {
-    inline-size: 40%;
-    block-size: 100%;
-    border-radius: inherit;
-    background: fn.get-color('primary', 700);
-    animation: progress 1.4s ease-in-out infinite;
-  }
-}
-
-@keyframes progress {
-  from {
-    transform: translateX(-100%);
-  }
-
-  to {
-    transform: translateX(250%);
-  }
+  @include mix.indeterminate-bar;
 }

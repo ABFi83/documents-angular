@@ -23,6 +23,22 @@
     font-weight: 700;
   }
 
+  // Group titles: what comes from the CVs, what the user added.
+  h3 {
+    color: fn.get-color('neutral', 700);
+    font-size: 0.875em;
+    font-weight: 600;
+  }
+
+  h3 ~ h3 {
+    margin-block-start: fn.calc-unit();
+  }
+
+  p[data-role='none'] {
+    color: fn.get-color('neutral', 700);
+    font-size: 0.875em;
+  }
+
   button[data-role='add'] {
     @include icon-button;
 
@@ -41,8 +57,8 @@
   }
 }
 
-/// Wrapping list of pill chips, each with a small remove button (skills list and skill dialog).
-@mixin chip-list {
+/// Wrapping list of pill chips; with `$removable` each has a small remove button (skills), otherwise read-only (CV detail).
+@mixin chip-list($removable: true) {
   display: flex;
   flex-wrap: wrap;
   gap: fn.calc-unit();
@@ -64,9 +80,71 @@
     font-weight: 500;
   }
 
-  li button {
-    @include danger-icon-button(fn.calc-unit(3.5));
+  @if $removable {
+    li button {
+      @include danger-icon-button(fn.calc-unit(3.5));
 
-    color: fn.get-color('primary', 900);
+      color: fn.get-color('primary', 900);
+    }
+  } @else {
+    li {
+      padding-inline-end: fn.calc-unit(1.75);
+    }
+  }
+}
+
+/// Experiences as a timeline (`<ol>`): a dot per role on a vertical line; each `<li>` holds
+/// `h3` (role), `p[data-role=company]`, `p[data-role=period]`, `p[data-role=description]`.
+@mixin experience-timeline {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: fn.calc-unit(0.25);
+    padding-block: 0 fn.calc-unit(2.5);
+    padding-inline-start: fn.calc-unit(3.5);
+    border-inline-start: 1px solid fn.get-color('neutral', 300);
+    margin-inline-start: fn.calc-unit(0.75);
+
+    &:last-child {
+      padding-block-end: 0;
+      border-inline-start-color: transparent;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset-block-start: fn.calc-unit(0.5);
+
+      // Centered on the 1px line: half the dot plus half the line.
+      inset-inline-start: fn.calc-unit(-0.9375);
+      inline-size: fn.calc-unit(1.75);
+      block-size: fn.calc-unit(1.75);
+      border: fn.calc-unit(0.375) solid white;
+      border-radius: 50%;
+      background: fn.get-color('primary', 700);
+      box-shadow: 0 0 0 1px fn.get-color('primary', 300);
+    }
+  }
+
+  p[data-role='company'] {
+    font-weight: 500;
+  }
+
+  p[data-role='period'] {
+    color: fn.get-color('neutral', 700);
+    font-size: 0.875em;
+  }
+
+  p[data-role='description'] {
+    margin-block-start: fn.calc-unit(0.75);
+    color: fn.get-color('neutral', 700);
+    white-space: pre-line;
   }
 }

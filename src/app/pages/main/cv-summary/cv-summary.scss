@@ -1,0 +1,158 @@
+@use 'functions' as fn;
+@use 'mixins' as mix;
+
+:host {
+  @include mix.profile-section;
+}
+
+:host header {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: fn.calc-unit(0.5);
+}
+
+:host header p {
+  color: fn.get-color('neutral', 700);
+  font-size: 0.875em;
+}
+
+div[data-role='columns'] {
+  display: grid;
+  gap: fn.calc-unit(3);
+}
+
+div[data-role='skills'],
+div[data-role='experiences'] {
+  display: flex;
+  flex-direction: column;
+  gap: fn.calc-unit(1.25);
+}
+
+// Chips: each one opens the CV it comes from, or the list of its CVs.
+ul[data-role='chips'] {
+  @include mix.chip-list($removable: false);
+
+  li {
+    padding: 0;
+  }
+
+  a,
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: fn.calc-unit();
+    padding: fn.calc-unit(0.5) fn.calc-unit(0.5) fn.calc-unit(0.5) fn.calc-unit(1.75);
+    border: none;
+    border-radius: inherit;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: fn.get-color('primary', 100);
+    }
+
+    &:focus-visible {
+      @include mix.focus-ring;
+    }
+  }
+}
+
+span[data-role='count'] {
+  padding: 0 fn.calc-unit();
+  border-radius: fn.calc-unit(5);
+  background: white;
+  color: fn.get-color('primary', 900);
+  font-size: 0.8125em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+// Opens under its chip (implicit anchor of the invoker); light dismiss closes it.
+[popover] {
+  @include mix.card;
+
+  position-area: block-end span-inline-end;
+  flex-direction: column;
+  gap: fn.calc-unit(0.75);
+  min-inline-size: fn.calc-unit(30);
+  margin: 0;
+  margin-block-start: fn.calc-unit(0.5);
+  padding: fn.calc-unit(1.5);
+  box-shadow: fn.card-shadow(4, 14%);
+
+  &:popover-open {
+    display: flex;
+  }
+
+  p {
+    color: fn.get-color('neutral', 700);
+    font-size: 0.875em;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: fn.calc-unit();
+    padding: fn.calc-unit(0.75) fn.calc-unit();
+    border-radius: fn.calc-unit();
+    color: fn.get-color('primary', 800);
+    font-weight: 500;
+    text-decoration: none;
+
+    &:hover {
+      background: fn.get-color('primary', 50);
+    }
+
+    &:focus-visible {
+      @include mix.focus-ring;
+    }
+  }
+
+  i {
+    @include mix.material-icon;
+  }
+}
+
+ol {
+  @include mix.experience-timeline;
+}
+
+h4 {
+  font-size: 1em;
+  font-weight: 600;
+}
+
+p[data-role='sources'] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: fn.calc-unit(0.5) fn.calc-unit();
+  margin-block-start: fn.calc-unit(0.5);
+  color: fn.get-color('neutral', 700);
+  font-size: 0.8125em;
+
+  a {
+    border-radius: fn.calc-unit(0.5);
+    color: fn.get-color('primary', 800);
+    font-weight: 500;
+
+    &:focus-visible {
+      @include mix.focus-ring;
+    }
+  }
+}
+
+@container (inline-size > #{fn.calc-unit(112)}) {
+  div[data-role='columns'] {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  }
+}

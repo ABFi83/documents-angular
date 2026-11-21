@@ -1,7 +1,8 @@
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
+import { CurrentUserService } from '@common/services/current-user.service';
 import { environment } from '@environments/environment';
 import { CvDocument, Extraction, ProcessStatus } from '@interfaces/document.interface';
 import { provideTranslateService } from '@ngx-translate/core';
@@ -13,6 +14,7 @@ describe('DocumentsDetail', () => {
   let fixture: ComponentFixture<DocumentsDetail>;
   let http: HttpTestingController;
   let element: HTMLElement;
+  const currentUser = { reload: vi.fn() };
   const url = `${environment.apiBaseUrl}/documents/7`;
   const extraction: Extraction = {
     nome: 'Mario',
@@ -47,7 +49,13 @@ describe('DocumentsDetail', () => {
     vi.useFakeTimers({ toFake: ['setInterval', 'clearInterval'] });
     document.documentElement.lang = 'it';
     TestBed.configureTestingModule({
-      providers: [provideRouter([]), provideHttpClient(), provideHttpClientTesting(), provideTranslateService()]
+      providers: [
+        provideRouter([]),
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideTranslateService(),
+        { provide: CurrentUserService, useValue: currentUser }
+      ]
     });
     http = TestBed.inject(HttpTestingController);
     fixture = TestBed.createComponent(DocumentsDetail);
@@ -111,5 +119,20 @@ describe('DocumentsDetail', () => {
     expect(link.download).toBe('cv.pdf');
     expect(link.href).toBe('blob:cv');
     expect(URL.revokeObjectURL).toHaveBeenCalledWith('blob:cv');
+  });
+
+  it('deletes the CV after the confirmation and goes back to the list', async () => {
+    const navigate = vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
+    await answer(cv('PENDING'));
+
+    (element.querySelector('button[data-role="delete"]') as HTMLButtonElement).click();
+    await fixture.whenStable();
+    (element.querySelector('app-confirm-dialog [data-role="confirm"]') as HTMLButtonElement).click();
+    const req = http.expectOne(`${environment.apiBaseUrl}/documents/7`);
+    expect(req.request.method).toBe('DELETE');
+    req.flush(null, { status: 204, statusText: 'No Content' });
+
+    expect(currentUser.reload).toHaveBeenCalled();
+    expect(navigate).toHaveBeenCalledWith(['/documents']);
   });
 });

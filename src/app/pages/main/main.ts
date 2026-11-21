@@ -1,32 +1,30 @@
-import { Component, computed, inject, linkedSignal } from '@angular/core';
-import { rxResource } from '@angular/core/rxjs-interop';
-import { UserApiService } from '@common/services/user-api.service';
-import { DocumentUpload } from './document-upload/document-upload';
+import { Component, inject, linkedSignal } from '@angular/core';
+import { Router } from '@angular/router';
+import { DocumentUpload } from '@common/components/document-upload/document-upload';
+import { CurrentUserService } from '@common/services/current-user.service';
+import { TranslatePipe } from '@ngx-translate/core';
+import { CvSummary } from './cv-summary/cv-summary';
 import { Experiences } from './experiences/experiences';
-import { MainHeader } from './main-header/main-header';
 import { Skills } from './skills/skills';
 
+/**
+ * The profile: the summary of the analyzed CVs, plus the skills and experiences the user adds by hand.
+ * Until the first CV is uploaded it shows the upload instead.
+ */
 @Component({
   selector: 'app-main',
-  imports: [DocumentUpload, Experiences, MainHeader, Skills],
+  imports: [CvSummary, DocumentUpload, Experiences, Skills, TranslatePipe],
   templateUrl: './main.html',
   styleUrl: './main.scss'
 })
 export class Main {
-  #userApi = inject(UserApiService);
+  #router = inject(Router);
 
-  #userResource = rxResource({ stream: () => this.#userApi.get() });
-
-  protected readonly user = computed(() => (this.#userResource.hasValue() ? this.#userResource.value() : null));
-  // The upload is shown until the user has a document; upload and reset switch it explicitly.
+  protected readonly user = inject(CurrentUserService).user;
   protected readonly showDocumentUpload = linkedSignal(() => !this.user()?.documents?.length);
 
-  protected onUploadCompleted(): void {
-    this.showDocumentUpload.set(false);
-    this.#userResource.reload();
-  }
-
-  protected onProfileReset(): void {
-    this.showDocumentUpload.set(true);
+  // The analysis goes on in the BE: its progress and result are in the CV list.
+  protected onUploaded(): void {
+    void this.#router.navigate(['/documents']);
   }
 }

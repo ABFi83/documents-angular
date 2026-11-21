@@ -33,6 +33,9 @@ ul {
 }
 
 li {
+  display: flex;
+  align-items: center;
+  gap: fn.calc-unit(0.5);
   border-block-end: 1px solid fn.get-color('neutral', 200);
 
   &:last-child {
@@ -43,6 +46,8 @@ li {
 // One CV per row: icon | title over date | status | chevron. The whole row opens the detail.
 a {
   display: grid;
+  flex: 1;
+  min-inline-size: 0;
   grid-template-columns: auto minmax(0, 1fr) auto auto;
   column-gap: fn.calc-unit(1.5);
   align-items: center;
@@ -96,6 +101,10 @@ span[data-role='status'] {
   @include mix.status-badge;
 
   grid-area: 1 / 3 / span 2;
+}
+
+button[data-role='delete'] {
+  @include mix.danger-icon-button;
 }
 
 p[data-role='empty'] {

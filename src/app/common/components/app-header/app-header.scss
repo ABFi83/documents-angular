@@ -20,17 +20,45 @@ header {
   padding: fn.calc-unit(1.5) fn.calc-unit(3);
 }
 
-p[data-role='brand'] {
+a[data-role='brand'] {
   @include mix.brand;
+
+  border-radius: fn.calc-unit(1.25);
+  text-decoration: none;
 }
 
-h1 {
-  flex: 1;
+a:focus-visible {
+  @include mix.focus-ring;
+}
+
+nav {
+  display: flex;
+  gap: fn.calc-unit(0.5);
   padding-inline-start: fn.calc-unit(2);
   border-inline-start: 1px solid fn.get-color('neutral', 300);
+}
+
+nav a {
+  padding: fn.calc-unit(0.75) fn.calc-unit(1.5);
+  border-radius: fn.calc-unit(1.25);
   color: fn.get-color('neutral', 700);
-  font-size: 1em;
   font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background 0.2s,
+    color 0.2s;
+
+  &:hover {
+    background: fn.get-color('neutral', 100);
+    color: fn.get-color('neutral', 900);
+  }
+
+  &[aria-current='page'] {
+    background: fn.get-color('primary', 50);
+    color: fn.get-color('primary', 900);
+    font-weight: 600;
+  }
 }
 
 button[popovertarget] {
@@ -103,8 +131,22 @@ button[data-role='logout'] {
 }
 
 @container (inline-size < #{fn.calc-unit(60)}) {
-  h1,
+  header {
+    gap: fn.calc-unit();
+    padding-inline: fn.calc-unit(2);
+  }
+
+  a[data-role='brand'] span,
   button[popovertarget] span {
     display: none;
+  }
+
+  nav {
+    padding-inline-start: 0;
+    border-inline-start: none;
+  }
+
+  nav a {
+    padding-inline: fn.calc-unit();
   }
 }

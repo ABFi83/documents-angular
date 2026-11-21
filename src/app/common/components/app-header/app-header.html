@@ -1,0 +1,22 @@
+@let currentUser = user();
+<header>
+  <a data-role="brand" routerLink="/main">
+    <i aria-hidden="true">description</i>
+    <span>{{ 'COMMON.APP_NAME' | translate }}</span>
+  </a>
+  <nav [attr.aria-label]="'NAV.LABEL' | translate">
+    <a routerLink="/main" routerLinkActive="" ariaCurrentWhenActive="page">{{ 'NAV.PROFILE' | translate }}</a>
+    <a routerLink="/documents" routerLinkActive="" ariaCurrentWhenActive="page">{{ 'NAV.CVS' | translate }}</a>
+  </nav>
+  <button type="button" popovertarget="main-menu" [attr.aria-label]="'MAIN.HEADER.MENU' | translate" [title]="'MAIN.HEADER.MENU' | translate">
+    <i aria-hidden="true">account_circle</i>
+    <span>{{ currentUser?.name }}</span>
+    <i aria-hidden="true">expand_more</i>
+  </button>
+  <div id="main-menu" popover #menu>
+    <p>{{ 'MAIN.HEADER.WELCOME' | translate }}</p>
+    <p data-role="user-name">{{ currentUser?.name }} {{ currentUser?.surname }}</p>
+    <button type="button" data-role="reset" (click)="reset()"><i aria-hidden="true">restart_alt</i>{{ 'MAIN.HEADER.RESET' | translate }}</button>
+    <button type="button" data-role="logout" (click)="logout()"><i aria-hidden="true">logout</i>{{ 'MAIN.HEADER.LOGOUT' | translate }}</button>
+  </div>
+</header>

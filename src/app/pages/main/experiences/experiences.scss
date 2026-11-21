@@ -45,7 +45,9 @@ button[data-role='view'] {
 
   i {
     @include mix.material-icon;
+  }
 
+  i:first-child {
     grid-row: span 2;
     padding: fn.calc-unit(1.25);
     border-radius: fn.calc-unit(1.25);
@@ -55,6 +57,7 @@ button[data-role='view'] {
 
   strong,
   span {
+    grid-column: 2;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
